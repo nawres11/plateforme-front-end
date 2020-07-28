@@ -24,7 +24,7 @@ import { RegisterLoginComponent} from './FRONT-OFFICE/register-Login/register-lo
 import { MaterialModule} from './material.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from 'ng-recaptcha';
-import { ShowHidePasswordModule} from 'ngx-show-hide-password';
+// import { ShowHidePasswordModule} from 'ngx-show-hide-password';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatPassToggleVisibilityComponent, MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
 import { MatPaginatorModule } from '@angular/material';
@@ -55,7 +55,7 @@ import { httpInterceptorProviders} from './services/auth/auth-interceptor';
     DialogComponent,
     ServerListComponent,
     CreateServerComponent,
-    ServerDetailsComponent, 
+    ServerDetailsComponent,
     UpdateComponent,
     FluxListComponent,
     CreateOpeningRequestComponent,
@@ -83,14 +83,14 @@ import { httpInterceptorProviders} from './services/auth/auth-interceptor';
     RecaptchaModule,
     RecaptchaFormsModule,
     ReactiveFormsModule,
-    ShowHidePasswordModule,
+    // ShowHidePasswordModule,
     MatPasswordStrengthModule,
     FormsModule,
     HttpClientModule,
     MatNativeDateModule,
     MatCheckboxModule,MatPaginatorModule,
     MaterialModule, MatDialogModule,
-    
+
   ],
   entryComponents: [DialogComponent],
   providers:[

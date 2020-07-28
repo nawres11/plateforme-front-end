@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 import { Serveur} from '../../../entities/Serveur';
 import {Flux} from '../../../entities/Flux';
 import { FluxService} from '../../../services/flux/flux.service';
@@ -13,28 +13,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./flux-list.component.css']
 })
 export class FluxListComponent implements OnInit {
-  
-  fluxs:any=[];
-  flux: Flux;
+
+  fluxs: any = new BehaviorSubject([]);
   server: Serveur;
   id: number;
   public showAddFlux: boolean;
   blurAll: boolean;
 
   constructor(private fluxService: FluxService, private router: Router) {
-    this.router.events.subscribe((val) => {this.reloadData(); }); }
+    this.router.events.subscribe(() => this.reloadData()); }
 
   ngOnInit() {
     this.blurAll = false;
-    
+    this.reloadData();
   }
+
   reloadData() {
-    console.log(this.fluxs);
-    this.flux = new Flux ();
     this.fluxs = this.fluxService.getFluxs();
-    
   }
- 
+
   addFlux() {
     this.showAddFlux = true;
     this.blurAll = true;
@@ -46,7 +43,7 @@ export class FluxListComponent implements OnInit {
     this.router.navigate(['admin/validate']);
   }
   closeAdd() {
- 
+
   this.showAddFlux = false;
   this.blurAll = false;
   this.reloadData();
