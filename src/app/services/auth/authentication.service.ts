@@ -1,16 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from '../../entities/user';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {UserService} from '../user/user.service';
-import {Observable} from "rxjs";
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../../entities/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from '../user/user.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-
 export class AuthenticationService {
   url = 'http://localhost:82';
   jwt: string;
@@ -18,11 +15,10 @@ export class AuthenticationService {
   roles: Array<string>;
   user: User;
 
-  constructor(private http: HttpClient, private userService: UserService) {
-  }
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   login(u: User) {
-    return this.http.post(this.url + '/login', u, {observe: 'response'});
+    return this.http.post(this.url + '/login', u, { observe: 'response' });
   }
 
   getToken() {
@@ -34,7 +30,6 @@ export class AuthenticationService {
     this.jwt = jwt;
     this.parseJWT();
   }
-
 
   parseJWT() {
     const jwtHelper = new JwtHelperService();
@@ -59,15 +54,15 @@ export class AuthenticationService {
   isAuthentified() {
     this.jwt = localStorage.getItem('token');
     this.parseJWT();
-    return this.roles && (this.isAdmin() || this.isUser());
+    return this.jwt && this.roles && (this.isAdmin() || this.isUser());
   }
 
   loggedIn() {
     if (localStorage.getItem('token')) {
-    return true;
+      return true;
+    }
+    return false;
   }
-  return false;
-}
   loggedOut() {
     localStorage.removeItem('token');
     this.email = '';
@@ -79,5 +74,4 @@ export class AuthenticationService {
     this.parseJWT();
     return this.userService.findByEmail(this.email).toPromise();
   }
-
 }

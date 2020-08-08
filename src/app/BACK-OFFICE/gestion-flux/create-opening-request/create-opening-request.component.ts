@@ -16,6 +16,7 @@ export class CreateOpeningRequestComponent implements OnInit {
   id: number;
   fluxs: any = [];
   fluxsList: Observable<Flux>;
+
   constructor(private fluxService: FluxService, private router: Router) {
     this.flux = new Flux();
   }
