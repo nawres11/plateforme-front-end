@@ -1,38 +1,46 @@
-<app-nav [actif]='thisPage'></app-nav>
-<body style="background-color:rgb(253, 253, 253)">
-<div>
-<mat-grid-list cols="1" rowHeight="800px">
-  <mat-grid-tile>
-    <table *ngIf="logTrue">
-      <tr>
-        <td>
-    <app-login></app-login>
-        </td>
-      </tr>
-      <tr >
-        <td style="Color:black;padding-left: 50px">
-   
-Nouveau sur notre plateforme?<button class="btn btn-link" style="margin-left:10px" (click)="change()">Inscription</button>
-        </td>
-      </tr>
-    </table>
-    <table *ngIf="signTrue">
-      <tr>
-        <td style="color:black;padding-top: 130px;padding-left:20px">
-          <button  class="btn btn-outline-light" *ngIf="signTrue" (click)="change()"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> 
-          Retour à la connexion
-        </td>
-      </tr>
-      <tr>
-      <td>
-        <app-register ></app-register>
-      </td>
-      </tr>
-    </table>
-
-  </mat-grid-tile>
-</mat-grid-list>
-</div>
-
+<app-nav [actif]="thisPage"></app-nav>
+<body style="background-color: rgb(253, 253, 253);">
+  <div>
+    <mat-grid-list cols="1" rowHeight="800px">
+      <mat-grid-tile>
+        <table *ngIf="logTrue">
+          <tr>
+            <td>
+              <app-login></app-login>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: black; padding-left: 50px;">
+              Nouveau sur notre plateforme?<button
+                class="btn btn-link"
+                style="margin-left: 10px;"
+                (click)="change()"
+              >
+                Inscription
+              </button>
+            </td>
+          </tr>
+        </table>
+        <table *ngIf="signTrue">
+          <tr>
+            <td style="color: black; padding-top: 130px; padding-left: 20px;">
+              <button
+                class="btn btn-outline-light"
+                *ngIf="signTrue"
+                (click)="change()"
+              >
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+              </button>
+              Retour à la connexion
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <app-register></app-register>
+            </td>
+          </tr>
+        </table>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </body>
-<app-footer></app-footer>

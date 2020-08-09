@@ -5,6 +5,8 @@ import * as XLSX from 'xlsx';
 import { FluxService } from 'src/app/services/flux/flux.service';
 import { Observable } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
+import { ServerService } from 'src/app/services/server/server.service';
+import { Serveur } from 'src/app/entities/Serveur';
 
 @Component({
   selector: 'app-dashbord',
@@ -16,6 +18,7 @@ export class DashbordComponent implements OnInit {
   @ViewChild('TABLE')
   TABLE: ElementRef;
   public flux$: Observable<Flux> = this.fluxService.getFluxs();
+  public server$: Observable<Serveur[]> = this.serverService.getServers();
   @ViewChild('TABLE1')
   TABLE1: ElementRef;
 
@@ -31,7 +34,7 @@ export class DashbordComponent implements OnInit {
   private xAxis: any;
   private yAxis: any;
 
-  constructor(private fluxService: FluxService) {}
+  constructor(private fluxService: FluxService, private serverService: ServerService) {}
 
   ngOnInit() {
     const dataDailySalesChart: any = {

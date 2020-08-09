@@ -1,74 +1,74 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import { Serveur} from '../../../entities/Serveur';
-import {ServerService} from '../../../services/server/server.service';
-import {ActivatedRoute,Router} from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { Serveur } from '../../../entities/Serveur';
+import { ServerService } from '../../../services/server/server.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-server-list',
   templateUrl: './server-list.component.html',
-  styleUrls: ['./server-list.component.css']
+  styleUrls: ['./server-list.component.css'],
 })
-
 export class ServerListComponent implements OnInit {
-  
-  
-  servers: any=[];
-  // server: Serveur;
-  id: number;
+  public servers: any = [];
+  public id: number;
   public showAddServer: boolean;
-  blurAll: boolean;
-  showModifServer: boolean;
-  showDetails: boolean;
+  public blurAll: boolean;
+  public showModifServer: boolean;
+  public showDetails: boolean;
   public reloadData$ = this.serverService.serverCreated$.pipe(
-    tap(serverCreated => this.reloadData())
+    tap((serverCreated) => this.reloadData())
   );
 
-  currentServer = null;
+  public currentServer = null;
+  public searchKey: string;
 
-  constructor(private serverService: ServerService,private route: ActivatedRoute, private router: Router,) {
-    this.router.events.subscribe((val) => {this.reloadData(); });
-   }
+  constructor(
+    private serverService: ServerService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.router.events.subscribe((val) => {
+      this.reloadData();
+    });
+  }
 
-   ngOnInit() {
-    this.blurAll = false;}
+  ngOnInit() {
+    this.blurAll = false;
+  }
 
   reloadData() {
-
-    // this.server = new Serveur();
-    this.serverService.getServers().subscribe(
-      _servers => this.servers = _servers
-    );
+    this.serverService
+      .getServers()
+      .subscribe((servers) => (this.servers = servers));
     console.log(this.servers);
-    
   }
-  
+
   details(id: number) {
-    // this.serverService.getServertById(id);
     this.showDetails = true;
     this.blurAll = true;
-      // this.id = this.route.snapshot.params['id'];
-      this.serverService.getServertById(id).subscribe(data => {
+    this.serverService.getServertById(id).subscribe(
+      (data) => {
         console.log(data);
-        // this.server = data;
         this.currentServer = data;
-      }, error1 => console.log(error1));
+      },
+      (error1) => console.log(error1)
+    );
   }
-    
-  
-  
+
   updateServer(id: number) {
     this.showModifServer = true;
     this.blurAll = true;
-    this.serverService.updateServer(id, this.currentServer).subscribe(success => {
-      this.reloadData();  
-    }, 
+    this.serverService.updateServer(id, this.currentServer).subscribe(
+      (success) => {
+        this.reloadData();
+      },
 
-    err => console.error(err));
+      (err) => console.error(err)
+    );
   }
-  
+
   addServer() {
     this.showAddServer = true;
     this.blurAll = true;
@@ -76,11 +76,11 @@ export class ServerListComponent implements OnInit {
   }
 
   closeAdd() {
-  this.showDetails = false;
-  this.showAddServer= false;
-  this.showModifServer = false;
-  this.blurAll = false;
-  this.reloadData();
+    this.showDetails = false;
+    this.showAddServer = false;
+    this.showModifServer = false;
+    this.blurAll = false;
+    this.reloadData();
   }
 
   closeAddFromAdd($event) {
@@ -88,10 +88,14 @@ export class ServerListComponent implements OnInit {
       this.closeAdd();
     }
   }
-  
 
+  onSearchClear() {
+    // TODO
+    throwError('not implemented');
+  }
+
+  applyFilter() {
+    // TODO
+    throwError('not implemented');
+  }
 }
-
-
-
-

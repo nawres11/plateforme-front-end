@@ -53,6 +53,9 @@ export class AuthenticationService {
 
   isAuthentified() {
     this.jwt = localStorage.getItem('token');
+    if (!this.jwt) {
+      return false;
+    }
     this.parseJWT();
     return this.jwt && this.roles && (this.isAdmin() || this.isUser());
   }

@@ -105,7 +105,7 @@
       <div class="card">
         <div class="card-header">
           <h4 class="card-title">Flux par Serveurs</h4>
-          <button (click)="ExportTOExcel()" class="btn btn-success">
+          <button (click)="ExportTOExcel()" class="btn btn-success" [disabled]="!(flux$ | async)">
             <span class="glyphicon glyphicon-download-alt"></span
             >&nbsp;ExportEnExcel
           </button>
