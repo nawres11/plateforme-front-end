@@ -61,7 +61,10 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "plateforme-pfe:build"
+            "browserTarget": "plateforme-pfe:build",
+            "aot": true,
+            "open": true,
+            "port": 4200
           },
           "configurations": {
             "production": {
