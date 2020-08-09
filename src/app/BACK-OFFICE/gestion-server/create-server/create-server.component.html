@@ -1,69 +1,118 @@
 <app-back-office></app-back-office>
 <div id="container">
-
-
   <div [hidden]="submitted">
     <form #myForm="ngForm" (ngSubmit)="closeThis()" *ngIf="server">
       <h1>Création d'un serveur</h1>
-      <div class="form-group">
-        <label for="id">ID</label>
-        <input type="number" class="form-control" placeholder="Entrer l'id du serveur..."  [(ngModel)]="server.id_serveur" id="id" required name="id">
-      </div>
 
       <div class="form-group">
         <label for="Intitule">Intitulé</label>
-        <input type="text" class="form-control" id="intitule" placeholder="Entrer l'intitulé du seveur..." required
-          [(ngModel)]="server.intitule" name="intitule">
+        <input
+          type="text"
+          class="form-control"
+          id="intitule"
+          placeholder="Entrer l'intitulé du seveur..."
+          required
+          [(ngModel)]="server.intitule"
+          name="intitule"
+        />
       </div>
       <div class="form-group">
         <label for="port">Port</label>
-       
-        <input type="number" class="form-control" id="port" maxlength="5" placeholder="Entrer un port..." required
-          [(ngModel)]="server.port" name="port">
-        
-      </div>  
+
+        <input
+          type="number"
+          class="form-control"
+          id="port"
+          maxlength="5"
+          placeholder="Entrer un port..."
+          required
+          [(ngModel)]="server.port"
+          name="port"
+        />
+      </div>
 
       <div class="form-group">
         <label for="url">URL</label>
-        <input type="url" class="form-control" id="url" placeholder="Entrer l'URL du serveur.." required
-          [(ngModel)]="server.url" name="url">
+        <input
+          type="url"
+          class="form-control"
+          id="url"
+          placeholder="Entrer l'URL du serveur.."
+          required
+          [(ngModel)]="server.url"
+          name="url"
+        />
       </div>
       <div class="form-group">
         <label for="type">Type</label>
-        <select id="type" required [(ngModel)]="server.type" name="Type" class="form-control" style="height:35px;">
+        <select
+          id="type"
+          required
+          [(ngModel)]="server.type"
+          name="Type"
+          class="form-control"
+          style="height: 35px;"
+        >
           <option value="source">source</option>
           <option value="destinataire">destinataire</option>
         </select>
-
       </div>
       <div class="form-group">
         <label for="projet">projet</label>
-        <select id="projet" required [(ngModel)]="server.intitule_projet" name="projet" class="form-control"
-          style="height:35px;">
-          <option value="pj1">pj1</option>
-          <option value="pj2">pj2</option>
-          <option value="pj3">pj3</option>
-        <select id="project" required name="projet" class="form-control"
+        <select
+          id="projet"
+          required
+          [(ngModel)]="server.projet"
+          name="projet"
+          class="form-control"
+          style="height: 35px;"
+          multiple
+        >
+          <option
+            *ngFor="let project of projectsList$ | async"
+            value="{{project.id_projet}}"
+            >#{{ project.id_projet }}/{{ project.intitule_projet }}</option
+          >
         </select>
-
+        <!-- <ejs-multiselect
+          id="multiselectelement"
+          [value]="colorValues"
+          [dataSource]="projectsList$ | async"
+          (tagging)="onTagging($event)"
+          [mode]="box"
+          [placeholder]="waterMark"
+          [fields]="fields"
+        ></ejs-multiselect> -->
+        <!-- <ejs-multiselect
+          id="multiselectelement"
+          [dataSource]="projectsList$ | async"
+          [mode]="box"
+        ></ejs-multiselect> -->
       </div>
 
       <div class="form-group">
         <label for="statut">Statut</label>
-        <select id="statut" required [(ngModel)]="server.statut" name="Statut" class="form-control"
-          style="height:35px;">
+        <select
+          id="statut"
+          required
+          [(ngModel)]="server.statut"
+          name="Statut"
+          class="form-control"
+          style="height: 35px;"
+        >
           <option value="stat1" selected>ouvert</option>
           <option value="stat2">fermé</option>
         </select>
-
       </div>
 
       <div class="btn-group">
-        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>ajouter</button>
+        <button type="submit" class="btn btn-success">
+          <span class="glyphicon glyphicon-plus"></span>ajouter
+        </button>
       </div>
     </form>
   </div>
 
-  <br /><br>
+  <br /><br />
   <app-footer></app-footer>
 </div>
