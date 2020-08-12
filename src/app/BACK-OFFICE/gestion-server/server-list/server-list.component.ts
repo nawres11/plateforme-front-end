@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { Serveur } from '../../../entities/Serveur';
 import { ServerService } from '../../../services/server/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-server-list',
@@ -18,6 +18,7 @@ export class ServerListComponent implements OnInit {
   public showModifServer: boolean;
   public showDetails: boolean;
   public reloadData$ = this.serverService.serverCreated$.pipe(
+    delay(600),
     tap((serverCreated) => this.reloadData())
   );
 

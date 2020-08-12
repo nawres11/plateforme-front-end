@@ -142,7 +142,7 @@
       <div class="card">
         <div class="card-header">
           <h4 class="card-title">Serveurs Par Projets</h4>
-          <button (click)="ExportTOExcel1()" class="btn btn-success">
+          <button (click)="ExportTOExcel1()" class="btn btn-success" [disabled]="!(server$ | async)">
             <span class="glyphicon glyphicon-download-alt"></span
             >&nbsp;ExportEnExcel
           </button>

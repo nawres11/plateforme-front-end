@@ -17,7 +17,7 @@ export class DashbordComponent implements OnInit {
   // Function exporttoExcel
   @ViewChild('TABLE')
   TABLE: ElementRef;
-  public flux$: Observable<Flux> = this.fluxService.getFluxs();
+  public flux$: Observable<Flux[]> = this.fluxService.getFluxs();
   public server$: Observable<Serveur[]> = this.serverService.getServers();
   @ViewChild('TABLE1')
   TABLE1: ElementRef;

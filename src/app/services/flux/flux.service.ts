@@ -12,8 +12,8 @@ export class FluxService {
 
   // fluxs:any=[];
 
-  getFluxs(): Observable<Flux> {
-    return this.http.get<Flux>(`${this.baseUrl}`);
+  getFluxs(): Observable<Flux[]> {
+    return this.http.get<Flux[]>(`${this.baseUrl}`);
   }
 
   createFlux(flux: object): Observable<object> {

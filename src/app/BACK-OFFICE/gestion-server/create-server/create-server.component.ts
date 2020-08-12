@@ -51,6 +51,7 @@ export class CreateServerComponent implements OnInit {
 
   closeThis() {
     this.submitted = true;
+    console.warn('server', this.server);
     this.save();
     this.closeAll.emit(true);
   }
