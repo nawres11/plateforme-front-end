@@ -1,0 +1,263 @@
+<app-back-office></app-back-office>
+
+<div *ngIf="reloadData$ | async"></div>
+<div class="panel panel-primary" style="margin-top: 90px;">
+  <div style="background-color: rgb(52, 58, 64);" class="panel-heading">
+    <h2>Liste des serveurs</h2>
+    <button
+      (click)="addServer()"
+      class="btn btn-success"
+      style="margin-left: 10px; float: right; margin-top: 45px;"
+    >
+      <i class="material-icons">add</i>Ajouter
+    </button>
+  </div>
+
+  <div style="margin-left: 350px;">
+    <span class="glyphicon glyphicon-search"></span>
+    <mat-form-field class="search-form-field">
+      <input
+        matInput
+        [(ngModel)]="searchKey"
+        placeholder="Search"
+        autocomplete="off"
+        (keyup)="applyFilter()"
+      />
+      <button
+        class="btn btn-info"
+        *ngIf="searchKey"
+        (click)="onSearchClear()"
+      ></button>
+    </mat-form-field>
+  </div>
+
+  <div class="panel-body">
+    <div *ngIf="servers != null">
+      <!-- {{servers[0] | json}} -->
+      <table
+        class="table table-striped table-bordered"
+        style="margin-right: 20px; margin-top: 50px; border-color: black;"
+      >
+        <thead class="thead-light">
+          <tr>
+            <th>Id</th>
+            <th>Intitule</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let server of servers" class="{{ server.class }}">
+            <td>{{ server.id_serveur }}</td>
+            <td>{{ server.intitule }}</td>
+            <td style="width: 180px;">
+              <!--  <button (click)=" details(server.id_serveur)" class="btn btn-dark" style="margin-left: 10px"><span class="glyphicon glyphicon-th-list" ></span></button>-->
+              <!--modal popup-->
+              <button
+                type="button"
+                class="btn btn-info"
+                style="margin-left: 10px;"
+                data-toggle="modal"
+                data-target="#myModal1"
+                title="détails"
+                (click)="details(server.id_serveur)"
+              >
+                <span class="glyphicon glyphicon-th-list"></span>
+              </button>
+              <div id="myModal1" class="modal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" style="text-align: center;">
+                        Détails d'un serveur
+                      </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div
+                        *ngIf="currentServer != null"
+                        class="{{ currentServer.class }}"
+                      >
+                        <label><b>Id: </b></label>
+                        {{ currentServer.id_serveur }} <br />
+                        <label><b>Intitule: </b></label>
+                        {{ currentServer.intitule }}<br />
+                        <label><b>Port: </b></label> {{ currentServer.port
+                        }}<br />
+                        <label><b>Url: </b></label> {{ currentServer.url
+                        }}<br />
+                        <label><b>Type: </b></label> {{ currentServer.type
+                        }}<br />
+                        <label><b>Projet: </b></label>
+                        <span *ngFor="let project of currentServer.projet"
+                          >#{{ project.id_projet }} /
+                          {{ project.intitule_projet }}</span
+                        ><br />
+                        <label><b>Statut: </b></label> {{ currentServer.statut
+                        }}<br />
+                      </div>
+                    </div>
+                    <div class="modal-footer" data-target="#myModal3">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-dismiss="modal"
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--update-->
+              <!--<button (click)="updateServer(server.id_serveur)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button> -->
+              <button
+                type="button"
+                class="btn btn-info"
+                style="margin-left: 10px;"
+                data-toggle="modal"
+                data-target="#Modal1"
+                title="détails"
+                (click)="details(server.id_serveur)"
+              >
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+
+              <div id="Modal1" class="modal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" style="text-align: center;">
+                        Modifier un serveur
+                      </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div
+                        *ngIf="currentServer != null"
+                        class="{{ currentServer.class }}"
+                      >
+                        <div class="form-group">
+                          <label for="id">ID</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id"
+                            required
+                            name="id"
+                            [(ngModel)]="currentServer.id_serveur"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label for="Intitule">Intitule</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="intitule"
+                            required
+                            [(ngModel)]="currentServer.intitule"
+                            name="intitule"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="port">Port</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="port"
+                            required
+                            [(ngModel)]="currentServer.port"
+                            name="port"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label for="url">URL</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="url"
+                            required
+                            [(ngModel)]="currentServer.url"
+                            name="url"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="type">Type</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="type"
+                            required
+                            [(ngModel)]="currentServer.type"
+                            name="type"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="projet">projet</label>
+                          <select
+                            id="projet"
+                            required
+                            [(ngModel)]="currentServer.projet"
+                            name="projet"
+                            class="form-control"
+                          >
+                            <option value="pj1">pj1</option>
+                            <option value="pj2">pj2</option>
+                            <option value="pj3">pj3</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="statut">Statut</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="statut"
+                            required
+                            [(ngModel)]="currentServer.statut"
+                            name="statut"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer" data-target="#Modal3">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-dismiss="modal"
+                      >
+                        <i class="material-icons">close</i>Annuler
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        data-dismiss="modal"
+                        (click)="updateServer(currentServer.id_serveur)"
+                      >
+                        <i class="material-icons">update</i>&nbsp;Modifier
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="showAddServer" class="formStyleContainer">
+    <div class="formStyle">
+      <app-create-server
+        (closeAll)="closeAddFromAdd($event)"
+      ></app-create-server>
+      <button
+        style="margin-left: 20%; margin-top: -13%; float: bottom;"
+        class="btn btn-dribbble"
+        (click)="closeAdd()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

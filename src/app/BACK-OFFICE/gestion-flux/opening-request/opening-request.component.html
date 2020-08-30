@@ -1,0 +1,69 @@
+<app-back-office></app-back-office>
+<div id="container">
+
+<h1>Demande d'ouverture de flux inter-serveur</h1>
+
+  <h4>Généralités</h4>
+<!--table flux-->
+  <table class="table table-striped table-bordered" style="margin-right:5px;margin-top:60px;border-color:black;">
+  <thead>
+   <tr>
+    <th>Cadre de la demande</th>
+    <th>Adresse source</th>
+    <th>Adresse destination</th>
+    <th>Ports</th>
+    <th>Durée</th>
+    <th>Description du flux</th>  
+   </tr>
+  </thead>
+  <tbody>
+      
+   <tr *ngFor="let flux of fluxs | async" class="{{flux.class}}"> 
+    <td>{{ flux.cadre}}</td>
+    <td>{{ flux.adresse_source }}</td>
+    <td>{{ flux.adresse_destinataire }}</td>
+    <td>{{ flux.port }}</td>
+    <td>{{ flux.duree }}</td>
+    <td>{{ flux.description }}</td>
+   </tr>
+  </tbody>
+</table>
+<!--rapport généré-->
+<h3>Destinataire</h3>
+ <table class="table table-striped table-bordered" style="margin-right:5px;border-color:rgb(34, 19, 19);">
+    <tr>
+      <td>Flux interne</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Flux externe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Partenaire</td>
+      <td></td>
+    </tr>
+</table>
+<h4>Informations</h4>
+  <table class="table table-striped table-bordered" style="margin-right:5px;border-color:rgb(34, 19, 19);">
+   <tr>
+    <td>Fichier échangé</td>
+    <td></td>
+   </tr>
+   <tr *ngFor="let flux of fluxs | async" class="{{flux.class}}">
+    <td>Périodicité</td>
+    <td>{{flux.periodicite}}</td>
+   </tr>
+  <tr *ngFor="let flux of fluxs | async" class="{{flux.class}}">
+    <th>Nature d'echange</th>
+    <td>{{flux.natureEchange}}</td>
+  </tr>
+  </table>
+  <h4>Commentaires</h4>
+  <p></p>
+  <br/><br> <br><br>
+   
+<app-footer></app-footer>
+ </div>
+
+
