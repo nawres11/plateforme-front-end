@@ -55,6 +55,7 @@ import { OpeningRequestComponent } from './BACK-OFFICE/gestion-flux/opening-requ
 import { CreateOpeningRequestComponent } from './BACK-OFFICE/gestion-flux/create-opening-request/create-opening-request.component';
 import { httpInterceptorProviders } from './services/auth/auth-interceptor';
 import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DashboardCardComponent } from './BACK-OFFICE/dashbord/dashboard-card/dashboard-card.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
     CreateOpeningRequestComponent,
     DashbordComponent,
     OpeningRequestComponent,
+    DashboardCardComponent,
   ],
   imports: [
     BrowserModule,

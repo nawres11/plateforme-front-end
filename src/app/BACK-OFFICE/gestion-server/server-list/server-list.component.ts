@@ -43,7 +43,6 @@ export class ServerListComponent implements OnInit {
     this.serverService
       .getServers()
       .subscribe((servers) => (this.servers = servers));
-    console.log(this.servers);
   }
 
   details(id: number) {

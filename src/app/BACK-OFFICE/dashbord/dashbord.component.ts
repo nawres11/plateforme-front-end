@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
 import { ServerService } from 'src/app/services/server/server.service';
 import { Serveur } from 'src/app/entities/Serveur';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashbord',
@@ -17,8 +18,15 @@ export class DashbordComponent implements OnInit {
   // Function exporttoExcel
   @ViewChild('TABLE')
   TABLE: ElementRef;
+
   public flux$: Observable<Flux[]> = this.fluxService.getFluxs();
   public server$: Observable<Serveur[]> = this.serverService.getServers();
+
+  public serversCount$ = this.dashbordService.countServers();
+  public projectsCount$ = this.dashbordService.countProjects();
+  public fluxCount$ = this.dashbordService.countFlux();
+  public networkErrorMessage = 'Network Error';
+
   @ViewChild('TABLE1')
   TABLE1: ElementRef;
 
@@ -34,7 +42,7 @@ export class DashbordComponent implements OnInit {
   private xAxis: any;
   private yAxis: any;
 
-  constructor(private fluxService: FluxService, private serverService: ServerService) {}
+  constructor(private fluxService: FluxService, private serverService: ServerService, private dashbordService: DashboardService) {}
 
   ngOnInit() {
     const dataDailySalesChart: any = {
