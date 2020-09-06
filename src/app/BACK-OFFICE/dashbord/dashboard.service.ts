@@ -1,3 +1,4 @@
+import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -5,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DashboardService {
-  API_URL = 'http://localhost:82/rest';
+  API_URL = `${SERVER_URL}/rest`;
+
   constructor(private http: HttpClient) {
   }
 

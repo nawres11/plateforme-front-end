@@ -1,3 +1,4 @@
+import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,7 +8,7 @@ import { Flux } from 'src/app/entities/Flux';
   providedIn: 'root',
 })
 export class FluxService {
-  private baseUrl = 'http://127.0.0.1:82/rest/fluxs';
+  private baseUrl = `${SERVER_URL}/rest/fluxs`;
   constructor(private http: HttpClient) {}
 
   // fluxs:any=[];
@@ -29,6 +30,6 @@ export class FluxService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
   getFluxByServerId(id: number): Observable<any> {
-    return this.http.get(`http://127.0.0.1:82/rest/fluxs/fluxsByServers/${id}`);
+    return this.http.get(`${this.baseUrl}/fluxsByServers/${id}`);
   }
 }

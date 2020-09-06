@@ -1,3 +1,4 @@
+import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
@@ -15,7 +16,7 @@ export class ServerService {
     .pipe(filter((serverCreated) => {
       return !!serverCreated;
     }));
-  private baseUrl = 'http://localhost:82/rest/servers';
+  private baseUrl = `${SERVER_URL}/rest/servers`;
 
   constructor(private http: HttpClient) {}
 

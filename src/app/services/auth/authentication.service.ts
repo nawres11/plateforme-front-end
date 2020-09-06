@@ -1,3 +1,4 @@
+import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../../entities/user';
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  url = 'http://localhost:82';
+  url = SERVER_URL;
   jwt: string;
   email: string;
   roles: Array<string>;
