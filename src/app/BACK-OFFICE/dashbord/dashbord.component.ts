@@ -1,13 +1,16 @@
+import { ProjetService } from 'src/app/services/projet/projet.service';
+import { Projet } from './../../entities/Projet';
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import * as Chartist from 'chartist';
 import * as d3 from 'd3';
 import * as XLSX from 'xlsx';
 import { FluxService } from 'src/app/services/flux/flux.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
 import { ServerService } from 'src/app/services/server/server.service';
 import { Serveur } from 'src/app/entities/Serveur';
 import { DashboardService } from './dashboard.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashbord',
@@ -21,6 +24,7 @@ export class DashbordComponent implements OnInit {
 
   public flux$: Observable<Flux[]> = this.fluxService.getFluxs();
   public server$: Observable<Serveur[]> = this.serverService.getServers();
+  public projects$: Observable<any> = this.projectsService.getProjects();
 
   public serversCount$ = this.dashbordService.countServers();
   public projectsCount$ = this.dashbordService.countProjects();
@@ -42,7 +46,12 @@ export class DashbordComponent implements OnInit {
   private xAxis: any;
   private yAxis: any;
 
-  constructor(private fluxService: FluxService, private serverService: ServerService, private dashbordService: DashboardService) {}
+  constructor(
+    private fluxService: FluxService,
+    private serverService: ServerService,
+    private dashbordService: DashboardService,
+    private projectsService: ProjetService
+  ) {}
 
   ngOnInit() {
     const dataDailySalesChart: any = {
@@ -209,5 +218,9 @@ export class DashbordComponent implements OnInit {
     });
 
     seq2 = 0;
+  }
+
+  getServerById(id: number) {
+    return this.serverService.getServertById(id);
   }
 }

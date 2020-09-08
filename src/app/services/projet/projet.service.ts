@@ -13,10 +13,10 @@ export class ProjetService {
   constructor(private http: HttpClient) {}
 
   projects: any = [];
-  getprojects() {
+  getProjects() {
     return this.http.get(`${this.baseUrl}`);
   }
-  getprojecttById(id: number): Observable<any> {
+  getProjecttById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 }

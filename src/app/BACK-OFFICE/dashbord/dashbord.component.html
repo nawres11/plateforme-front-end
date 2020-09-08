@@ -107,31 +107,32 @@
     <div class="col-lg-6 col-md-12" #TABLE1 #table1>
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Serveurs Par Projets</h4>
-          <button (click)="ExportTOExcel1()" class="btn btn-success" [disabled]="!(server$ | async)">
+          <h4 class="card-title">Projets</h4>
+          <button (click)="ExportTOExcel1()" class="btn btn-success" [disabled]="!(projects$ | async)">
             <span class="glyphicon glyphicon-download-alt"></span
             >&nbsp;ExportEnExcel
           </button>
         </div>
       </div>
       <div class="card-body table-responsive">
-        <table class="table" style="border: 1px black;">
+        <table class="table" style="border: 1px black;" *ngIf="projects$ | async as flux">
           <tr>
-            <th class="text-info">Projets/serveur</th>
-            <th style="color: white;">S1</th>
-            <th style="color: white;">S2</th>
+            <th class="text-info">Projet</th>
+            <th class="text-info">Type</th>
           </tr>
-          <tr style="color: white;">
-            <td><b>P1</b></td>
-            <td>3 flux</td>
-            <td>2 flux</td>
-          </tr>
-          <tr style="color: white;">
-            <td><b>P2</b></td>
-            <td>1 flux</td>
-            <td>4 flux</td>
+          <tr style="color: white;" *ngFor="let project of (projects$ | async)">
+            <td>
+              {{project.intitule_projet}}
+            </td>
+
+            <td>
+              {{project.type_projet}}
+            </td>
           </tr>
         </table>
+        <div *ngIf="!(projects$ | async)" style="color: aliceblue;">
+          No Data to show
+        </div>
       </div>
     </div>
   </div>

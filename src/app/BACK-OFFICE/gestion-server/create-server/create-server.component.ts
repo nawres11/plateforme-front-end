@@ -26,7 +26,7 @@ export class CreateServerComponent implements OnInit {
   servers: any = [];
   serversList: Observable<any>;
   projectsIds: number[];
-  projectsList$ = this.projectsService.getprojects();
+  projectsList$ = this.projectsService.getProjects();
 
   constructor(
     private serverService: ServerService,

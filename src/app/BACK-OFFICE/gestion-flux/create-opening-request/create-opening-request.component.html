@@ -1,99 +1,223 @@
 <app-back-office></app-back-office>
-<div id="container" >
-
-    <div [hidden]="submitted" >
-        <form #myForm="ngForm">
-          <h1>Création d'une demande d'ouverture de flux</h1>
-        <div class="form-group">
+<div id="container">
+  <div [hidden]="submitted">
+    <form #myForm="ngForm">
+      <h1>Création d'une demande d'ouverture de flux</h1>
+      <div class="form-group">
         <label for="cadre">Cadre de la demande</label>
-        <input type="text" class="form-control" id="cadre" placeholder="Entrer le cadre de la demande... " required [(ngModel)]="flux.cadre" name="cadre" >
-        </div>
+        <input
+          type="text"
+          class="form-control"
+          id="cadre"
+          placeholder="Entrer le cadre de la demande... "
+          required
+          [(ngModel)]="flux.cadre"
+          name="cadre"
+        />
+      </div>
 
-        <div class="form-group">
+      <div class="form-group">
+        <label for="projet">Projet</label>
+        <select
+          id="projet"
+          required
+          [(ngModel)]="flux.id_projet"
+          name="id_projet"
+          class="form-control"
+          style="height: 35px"
+        >
+          <option value="{{project.id_projet}}" *ngFor="let project of (projects$ | async)">#{{ project.id_projet }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="server">Server</label>
+        <select
+          id="sever"
+          required
+          [(ngModel)]="flux.id_serveur"
+          name="id_serveur"
+          class="form-control"
+          style="height: 35px"
+          (change)="onChange($event.target.value)"
+        >
+          <option value="{{server.id_serveur}}" *ngFor="let server of (server$ | async)">#{{ server.id_serveur }}/{{ server.intitule }}</option>
+        </select>
+      </div>
+      <div style="color: yellow;">
+        {{relatedServer | json}}
+      </div>
+      <div hidden>
+        {{relatedServer$ | async}}
+      </div>
+      <div class="form-group">
         <label for="adressSource">Adresse Source</label>
-        <input type="text"class="form-control" placeholder="Entrer l'adresse Source..." required [(ngModel)]="flux.adresse_source" name="adresseS" >
-        </div>
-        <div class="form-group">
-            <label for="adressDestinataire">Adresse Destinataire</label>
-            <input type="text"class="form-control" id="adresseD" placeholder="Entrer l'adresse Destinataire..." required [(ngModel)]="flux.adresse_destinataire" name="adresseD" >
-            </div>
-        <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Entrer l'adresse Source..."
+          required
+          [(ngModel)]="flux.adresse_source"
+          name="adresseS"
+          value="{{relatedServer?.url}}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="adressDestinataire">Adresse Destinataire</label>
+        <input
+          type="text"
+          class="form-control"
+          id="adresseD"
+          placeholder="Entrer l'adresse Destinataire..."
+          required
+          [(ngModel)]="flux.adresse_destinataire"
+          name="adresseD"
+        />
+      </div>
+      <div class="form-group">
         <label for="port">Port</label>
-        <input type="number" class="form-control" id="port" placeholder="Entrer un port..." required [(ngModel)]="flux.port" name="port" >
-        </div>
+        <input
+          type="number"
+          class="form-control"
+          id="port"
+          placeholder="Entrer un port..."
+          required
+          [(ngModel)]="flux.port"
+          name="port"
+          value="{{relatedServer?.port}}"
+        />
+      </div>
 
-        <div class="form-group">
+      <div class="form-group">
         <label for="duree">Durée</label>
-        <input type="number"class="form-control" id="duree" placeholder="Entrer une durée..." required [(ngModel)]="flux.duree" name="duree">
-        </div>
-        <div class="form-group">
-            <label for="date">Date d'ouverture</label>
-            <input type="text"class="form-control" id="date" placeholder="jj/mm/aaaa" required [(ngModel)]="flux.dateOuverture" name="date">
-        </div>
-        <div class="form-group">
-            <label for="periodicite">Périodicité</label>
-            <input type="text"class="form-control" id="periodicite" placeholder="Entrer une périodicité..." required [(ngModel)]="flux.periodicite" name="periodicite">
-        </div>
-        <div class="form-group">
-                <label for="nature">Nature d'échange</label>
-                <input type="text"class="form-control" id="nature" placeholder="Entrer une nature d'échange..." required [(ngModel)]="flux.natureEchange" name="nat">
-        </div>
-        <div class="form-group">
-            <label for="type">Type</label>
+        <input
+          type="number"
+          class="form-control"
+          id="duree"
+          placeholder="Entrer une durée..."
+          required
+          [(ngModel)]="flux.duree"
+          name="duree"
+        />
+      </div>
+      <div class="form-group">
+        <label for="date">Date d'ouverture</label>
+        <input
+          type="text"
+          class="form-control"
+          id="date"
+          placeholder="jj/mm/aaaa"
+          required
+          [(ngModel)]="flux.dateOuverture"
+          name="date"
+        />
+      </div>
+      <div class="form-group">
+        <label for="periodicite">Périodicité</label>
+        <input
+          type="text"
+          class="form-control"
+          id="periodicite"
+          placeholder="Entrer une périodicité..."
+          required
+          [(ngModel)]="flux.periodicite"
+          name="periodicite"
+        />
+      </div>
+      <div class="form-group">
+        <label for="nature">Nature d'échange</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nature"
+          placeholder="Entrer une nature d'échange..."
+          required
+          [(ngModel)]="flux.natureEchange"
+          name="nat"
+        />
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
 
-  <select id="type" required [(ngModel)]="flux.type_flux" name="Type" class="form-control" style="height:35px;">
-              <option value="type1">interne</option><option value="type2">externe</option></select>
+        <select
+          id="type"
+          required
+          [(ngModel)]="flux.type_flux"
+          name="Type"
+          class="form-control"
+          style="height: 35px"
+        >
+          <option value="type1">interne</option>
+          <option value="type2">externe</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          placeholder="description"
+          required
+          [(ngModel)]="flux.description"
+          name="description"
+        />
+      </div>
 
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text"class="form-control" id="description" placeholder="description" required [(ngModel)]="flux.description" name="description">
-        </div>
-
-        <div class="form-group">
-          <label for="statut">Statut</label>
-          <select id="statut" required [(ngModel)]="flux.statut" name="Statut" class="form-control" style="height:35px;">
-            <option value="stat1" selected >entrant</option><option value="stat2">sortant</option></select>
-
-        </div>
-        <!-- @TODO add server and project dropdowns -->
-        <div class="form-group">
-          <label for="server">Server</label>
-          <select id="sever" required [(ngModel)]="flux.statut" name="Statut" class="form-control" style="height:35px;">
-            <option value="stat1" selected >entrant</option><option value="stat2">sortant</option></select>
-        </div>
-
-
-
-  </form>
-</div>
-<button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid">Valider</button>
- <!-- The Modal -->
- <div class="modal" id="Modalvalid">
+      <div class="form-group">
+        <label for="statut">Statut</label>
+        <select
+          id="statut"
+          required
+          [(ngModel)]="flux.statut"
+          name="Statut"
+          class="form-control"
+          style="height: 35px"
+        >
+          <option value="stat1" selected>entrant</option>
+          <option value="stat2">sortant</option>
+        </select>
+      </div>
+      <!-- @TODO add server and project dropdowns -->
+    </form>
+  </div>
+  <button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid">
+    Valider
+  </button>
+  <!-- The Modal -->
+  <div class="modal" id="Modalvalid">
     <div class="modal-dialog">
       <div class="modal-content">
-
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Voulez vous valider cette demande ?</h4>
-
         </div>
-
 
         <!-- Modal footer -->
-        <div class="modal-footer"  >
-            <br><br><br>
-          <button type="button" style="background-color:grey;padding:10px;margin:10px;" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Annuler</button>
-          <button type="button" style="background-color: green;padding:10px;margin:10px;" class="btn btn-success" data-dismiss="modal" (click)="closeThis()"><span class="glyphicon glyphicon-ok"></span>&nbsp;Valider</button>
+        <div class="modal-footer">
+          <br /><br /><br />
+          <button
+            type="button"
+            style="background-color: grey; padding: 10px; margin: 10px"
+            class="btn btn-danger"
+            data-dismiss="modal"
+          >
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Annuler
+          </button>
+          <button
+            type="button"
+            style="background-color: green; padding: 10px; margin: 10px"
+            class="btn btn-success"
+            data-dismiss="modal"
+            (click)="closeThis()"
+          >
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;Valider
+          </button>
         </div>
-
       </div>
     </div>
   </div>
 
-
-
-    <br/><br>
-<app-footer></app-footer>
-
+  <br /><br />
+  <app-footer></app-footer>
 </div>
