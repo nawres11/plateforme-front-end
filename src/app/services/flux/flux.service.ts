@@ -1,17 +1,22 @@
 import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FluxService {
   private baseUrl = `${SERVER_URL}/rest/fluxs`;
+  public fluxCreatedSubject = new BehaviorSubject<boolean>(false);
+  public fluxCreated$ = this.fluxCreatedSubject
+    .asObservable()
+    .pipe(filter((fluxCreated) => {
+      return !!fluxCreated;
+    }));
   constructor(private http: HttpClient) {}
-
-  // fluxs:any=[];
 
   getFluxs(): Observable<Flux[]> {
     return this.http.get<Flux[]>(`${this.baseUrl}`);

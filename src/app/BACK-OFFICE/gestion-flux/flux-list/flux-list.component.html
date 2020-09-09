@@ -1,5 +1,5 @@
 <app-back-office></app-back-office>
-<br>
+<div *ngIf="reloadData$ | async"></div>
 <div class="panel panel-primary">
   <div style="background-color: rgb(52,58,64); margin-top: 75px" class="panel-heading">
     <h2>Liste des flux inter-serveurs</h2>
