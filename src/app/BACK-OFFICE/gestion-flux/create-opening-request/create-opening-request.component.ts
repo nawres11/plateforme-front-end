@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
 import { FluxService } from '../../../services/flux/flux.service';
 import { tap } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-opening-request',
@@ -21,6 +22,22 @@ export class CreateOpeningRequestComponent implements OnInit {
 
   fluxs: any = [];
   fluxsList: Observable<Flux>;
+
+  fluxCreationForm = new FormGroup({
+    id_serveur: new FormControl(''),
+    id_projet: new FormControl(''),
+    cadre: new FormControl(''),
+    adresse_source: new FormControl(''),
+    adresse_destinataire: new FormControl(''),
+    port: new FormControl(''),
+    duree: new FormControl(''),
+    dateOuverture: new FormControl(''),
+    periodicite: new FormControl(''),
+    natureEchange: new FormControl(''),
+    description: new FormControl(''),
+    statut: new FormControl(''),
+    type_flux: new FormControl(''),
+  });
 
   relatedServer$: any;
   relatedServer: any;
@@ -42,12 +59,12 @@ export class CreateOpeningRequestComponent implements OnInit {
   }
 
   save() {
-    console.log({...this.flux, id_projet: 3});
-    this.fluxService.createFlux({...this.flux, id_projet: 3}).subscribe(
+    console.log(this.fluxCreationForm.getRawValue());
+    this.fluxService.createFlux(this.fluxCreationForm.getRawValue()).subscribe(
       (data) => console.log('msg:', data),
       (error1) => console.log(error1)
     );
-    this.flux = new Flux();
+    this.fluxCreationForm.reset();
     this.goToList();
   }
 
@@ -64,9 +81,9 @@ export class CreateOpeningRequestComponent implements OnInit {
 
   onChange(id: number) {
     console.log(id);
-    console.log(this.flux);
+    console.log(this.fluxCreationForm.get('id_serveur').value);
 
-    if (this.flux.id_serveur) {
+    if (this.fluxCreationForm.get('id_serveur').value) {
       console.warn(id);
       this.relatedServer$ = this.serverService
         .getServertById(id)
@@ -74,8 +91,8 @@ export class CreateOpeningRequestComponent implements OnInit {
           tap(
             (rs) => {
               this.relatedServer = rs;
-              this.flux.port = this.relatedServer.port;
-              this.flux.adresse_source = this.relatedServer.url;
+              this.fluxCreationForm.get('port').setValue(this.relatedServer.port);
+              this.fluxCreationForm.get('adresse_source').setValue(this.relatedServer.url);
             }
           )
         );

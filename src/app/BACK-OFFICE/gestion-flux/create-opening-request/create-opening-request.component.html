@@ -1,7 +1,8 @@
-<app-back-office></app-back-office>
+<!-- <app-back-office></app-back-office> -->
+<h1>{{fluxCreationForm.getRawValue() | json}}</h1>
 <div id="container">
   <div [hidden]="submitted">
-    <form #myForm="ngForm">
+    <form #myForm="ngForm" [formGroup]="fluxCreationForm">
       <h1>Création d'une demande d'ouverture de flux</h1>
       <div class="form-group">
         <label for="cadre">Cadre de la demande</label>
@@ -10,9 +11,7 @@
           class="form-control"
           id="cadre"
           placeholder="Entrer le cadre de la demande... "
-          required
-          [(ngModel)]="flux.cadre"
-          name="cadre"
+          formControlName="cadre"
         />
       </div>
 
@@ -20,9 +19,7 @@
         <label for="projet">Projet</label>
         <select
           id="projet"
-          required
-          [(ngModel)]="flux.id_projet"
-          name="id_projet"
+          formControlName="id_projet"
           class="form-control"
           style="height: 35px"
         >
@@ -35,8 +32,7 @@
         <select
           id="sever"
           required
-          [(ngModel)]="flux.id_serveur"
-          name="id_serveur"
+          formControlName="id_serveur"
           class="form-control"
           style="height: 35px"
           (change)="onChange($event.target.value)"
@@ -56,9 +52,7 @@
           type="text"
           class="form-control"
           placeholder="Entrer l'adresse Source..."
-          required
-          [(ngModel)]="flux.adresse_source"
-          name="adresseS"
+          formControlName="adresse_source"
           value="{{relatedServer?.url}}"
         />
       </div>
@@ -69,9 +63,7 @@
           class="form-control"
           id="adresseD"
           placeholder="Entrer l'adresse Destinataire..."
-          required
-          [(ngModel)]="flux.adresse_destinataire"
-          name="adresseD"
+          formControlName="adresse_destinataire"
         />
       </div>
       <div class="form-group">
@@ -81,10 +73,8 @@
           class="form-control"
           id="port"
           placeholder="Entrer un port..."
-          required
-          [(ngModel)]="flux.port"
-          name="port"
           value="{{relatedServer?.port}}"
+          formControlName="port"
         />
       </div>
 
@@ -95,9 +85,7 @@
           class="form-control"
           id="duree"
           placeholder="Entrer une durée..."
-          required
-          [(ngModel)]="flux.duree"
-          name="duree"
+          formControlName="duree"
         />
       </div>
       <div class="form-group">
@@ -107,9 +95,7 @@
           class="form-control"
           id="date"
           placeholder="jj/mm/aaaa"
-          required
-          [(ngModel)]="flux.dateOuverture"
-          name="date"
+          formControlName="dateOuverture"
         />
       </div>
       <div class="form-group">
@@ -119,9 +105,7 @@
           class="form-control"
           id="periodicite"
           placeholder="Entrer une périodicité..."
-          required
-          [(ngModel)]="flux.periodicite"
-          name="periodicite"
+          formControlName="periodicite"
         />
       </div>
       <div class="form-group">
@@ -131,21 +115,16 @@
           class="form-control"
           id="nature"
           placeholder="Entrer une nature d'échange..."
-          required
-          [(ngModel)]="flux.natureEchange"
-          name="nat"
+          formControlName="natureEchange"
         />
       </div>
       <div class="form-group">
         <label for="type">Type</label>
-
         <select
           id="type"
-          required
-          [(ngModel)]="flux.type_flux"
-          name="Type"
           class="form-control"
           style="height: 35px"
+          formControlName="type_flux"
         >
           <option value="type1">interne</option>
           <option value="type2">externe</option>
@@ -158,9 +137,7 @@
           class="form-control"
           id="description"
           placeholder="description"
-          required
-          [(ngModel)]="flux.description"
-          name="description"
+          formControlName="description"
         />
       </div>
 
@@ -168,9 +145,7 @@
         <label for="statut">Statut</label>
         <select
           id="statut"
-          required
-          [(ngModel)]="flux.statut"
-          name="Statut"
+          formControlName="statut"
           class="form-control"
           style="height: 35px"
         >
