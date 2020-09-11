@@ -20,7 +20,7 @@ export class FluxListComponent implements OnInit {
   blurAll: boolean;
   public reloadData$ = this.fluxService.fluxCreated$.pipe(
     delay(600),
-    tap((serverCreated) => this.reloadData())
+    tap((flux) => this.reloadData())
   );
   constructor(private fluxService: FluxService, private router: Router) {
     this.router.events.subscribe(() => this.reloadData());

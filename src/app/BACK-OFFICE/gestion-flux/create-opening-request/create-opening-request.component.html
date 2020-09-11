@@ -1,5 +1,4 @@
-<!-- <app-back-office></app-back-office> -->
-<h1>{{fluxCreationForm.getRawValue() | json}}</h1>
+<app-back-office></app-back-office>
 <div id="container">
   <div [hidden]="submitted">
     <form #myForm="ngForm" [formGroup]="fluxCreationForm">
@@ -13,6 +12,9 @@
           placeholder="Entrer le cadre de la demande... "
           formControlName="cadre"
         />
+        <div *ngIf="fluxCreationForm.get('cadre').invalid && (fluxCreationForm.get('cadre').dirty || fluxCreationForm.get('cadre').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un cadre s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -25,6 +27,9 @@
         >
           <option value="{{project.id_projet}}" *ngFor="let project of (projects$ | async)">#{{ project.id_projet }}</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('id_projet').invalid && (fluxCreationForm.get('id_projet').dirty || fluxCreationForm.get('id_projet').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner un projet s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -39,9 +44,9 @@
         >
           <option value="{{server.id_serveur}}" *ngFor="let server of (server$ | async)">#{{ server.id_serveur }}/{{ server.intitule }}</option>
         </select>
-      </div>
-      <div style="color: yellow;">
-        {{relatedServer | json}}
+        <div *ngIf="fluxCreationForm.get('id_serveur').invalid && (fluxCreationForm.get('id_serveur').dirty || fluxCreationForm.get('id_serveur').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner un serveur s'il vous plait
+        </div>
       </div>
       <div hidden>
         {{relatedServer$ | async}}
@@ -55,6 +60,9 @@
           formControlName="adresse_source"
           value="{{relatedServer?.url}}"
         />
+        <div *ngIf="fluxCreationForm.get('adresse_source').invalid && (fluxCreationForm.get('adresse_source').dirty || fluxCreationForm.get('adresse_source').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1
+        </div>
       </div>
       <div class="form-group">
         <label for="adressDestinataire">Adresse Destinataire</label>
@@ -65,6 +73,9 @@
           placeholder="Entrer l'adresse Destinataire..."
           formControlName="adresse_destinataire"
         />
+        <div *ngIf="fluxCreationForm.get('adresse_destinataire').invalid && (fluxCreationForm.get('adresse_destinataire').dirty || fluxCreationForm.get('adresse_destinataire').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1
+        </div>
       </div>
       <div class="form-group">
         <label for="port">Port</label>
@@ -76,6 +87,9 @@
           value="{{relatedServer?.port}}"
           formControlName="port"
         />
+        <div *ngIf="fluxCreationForm.get('port').invalid && (fluxCreationForm.get('port').dirty || fluxCreationForm.get('port').touched)" class="alert alert-danger form-danger" role="alert">
+          le port est obligatoire et doit etre compris entre 1024 et 49151
+        </div>
       </div>
 
       <div class="form-group">
@@ -87,16 +101,22 @@
           placeholder="Entrer une durée..."
           formControlName="duree"
         />
+        <div *ngIf="fluxCreationForm.get('duree').invalid && (fluxCreationForm.get('duree').dirty || fluxCreationForm.get('duree').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une durée valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="date">Date d'ouverture</label>
         <input
-          type="text"
+          type="date"
           class="form-control"
           id="date"
           placeholder="jj/mm/aaaa"
           formControlName="dateOuverture"
         />
+        <div *ngIf="fluxCreationForm.get('dateOuverture').invalid && (fluxCreationForm.get('dateOuverture').dirty || fluxCreationForm.get('dateOuverture').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner une date valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="periodicite">Périodicité</label>
@@ -107,6 +127,9 @@
           placeholder="Entrer une périodicité..."
           formControlName="periodicite"
         />
+        <div *ngIf="fluxCreationForm.get('periodicite').invalid && (fluxCreationForm.get('periodicite').dirty || fluxCreationForm.get('periodicite').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une périodicité valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="nature">Nature d'échange</label>
@@ -117,6 +140,9 @@
           placeholder="Entrer une nature d'échange..."
           formControlName="natureEchange"
         />
+        <div *ngIf="fluxCreationForm.get('natureEchange').invalid && (fluxCreationForm.get('natureEchange').dirty || fluxCreationForm.get('natureEchange').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une nature d'échange valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="type">Type</label>
@@ -129,6 +155,9 @@
           <option value="type1">interne</option>
           <option value="type2">externe</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('type_flux').invalid && (fluxCreationForm.get('type_flux').dirty || fluxCreationForm.get('type_flux').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner le type du flux s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
@@ -139,6 +168,9 @@
           placeholder="description"
           formControlName="description"
         />
+        <div *ngIf="fluxCreationForm.get('description').invalid && (fluxCreationForm.get('description').dirty || fluxCreationForm.get('description').touched)" class="alert alert-danger form-danger" role="alert">
+          écrire un déscription pour votre flux s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -152,11 +184,13 @@
           <option value="stat1" selected>entrant</option>
           <option value="stat2">sortant</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('statut').invalid && (fluxCreationForm.get('statut').dirty || fluxCreationForm.get('statut').touched)" class="alert alert-danger form-danger" role="alert">
+          sélectionner un statut pour votre flux s'il vous plait
+        </div>
       </div>
-      <!-- @TODO add server and project dropdowns -->
     </form>
   </div>
-  <button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid">
+  <button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid" [disabled]="!fluxCreationForm.valid">
     Valider
   </button>
   <!-- The Modal -->
@@ -192,7 +226,5 @@
       </div>
     </div>
   </div>
-
-  <br /><br />
   <app-footer></app-footer>
 </div>

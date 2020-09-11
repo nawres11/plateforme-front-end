@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Flux } from 'src/app/entities/Flux';
 import { FluxService } from '../../../services/flux/flux.service';
 import { tap } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-opening-request',
@@ -24,19 +24,33 @@ export class CreateOpeningRequestComponent implements OnInit {
   fluxsList: Observable<Flux>;
 
   fluxCreationForm = new FormGroup({
-    id_serveur: new FormControl(''),
-    id_projet: new FormControl(''),
-    cadre: new FormControl(''),
-    adresse_source: new FormControl(''),
-    adresse_destinataire: new FormControl(''),
-    port: new FormControl(''),
-    duree: new FormControl(''),
-    dateOuverture: new FormControl(''),
-    periodicite: new FormControl(''),
-    natureEchange: new FormControl(''),
-    description: new FormControl(''),
-    statut: new FormControl(''),
-    type_flux: new FormControl(''),
+    id_serveur: new FormControl('', [Validators.required]),
+    id_projet: new FormControl('', [Validators.required]),
+    cadre: new FormControl('', [Validators.required]),
+    adresse_source: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        '((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(.(?!$)|$)){4}'
+      ),
+    ]),
+    adresse_destinataire: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        '((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(.(?!$)|$)){4}'
+      ),
+    ]),
+    port: new FormControl('', [
+      Validators.required,
+      Validators.min(1024),
+      Validators.max(49151),
+    ]),
+    duree: new FormControl('', [Validators.required]),
+    dateOuverture: new FormControl('', [Validators.required]),
+    periodicite: new FormControl('', [Validators.required]),
+    natureEchange: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    statut: new FormControl('', [Validators.required]),
+    type_flux: new FormControl('', [Validators.required]),
   });
 
   relatedServer$: any;
@@ -48,7 +62,7 @@ export class CreateOpeningRequestComponent implements OnInit {
     private fluxService: FluxService,
     private router: Router,
     private serverService: ServerService,
-    private projectService: ProjetService,
+    private projectService: ProjetService
   ) {
     this.flux = new Flux();
   }
@@ -85,17 +99,15 @@ export class CreateOpeningRequestComponent implements OnInit {
 
     if (this.fluxCreationForm.get('id_serveur').value) {
       console.warn(id);
-      this.relatedServer$ = this.serverService
-        .getServertById(id)
-        .pipe(
-          tap(
-            (rs) => {
-              this.relatedServer = rs;
-              this.fluxCreationForm.get('port').setValue(this.relatedServer.port);
-              this.fluxCreationForm.get('adresse_source').setValue(this.relatedServer.url);
-            }
-          )
-        );
+      this.relatedServer$ = this.serverService.getServertById(id).pipe(
+        tap((rs) => {
+          this.relatedServer = rs;
+          this.fluxCreationForm.get('port').setValue(this.relatedServer.port);
+          this.fluxCreationForm
+            .get('adresse_source')
+            .setValue(this.relatedServer.url);
+        })
+      );
     }
   }
 }

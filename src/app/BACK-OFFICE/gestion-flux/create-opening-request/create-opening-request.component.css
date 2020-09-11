@@ -2,14 +2,14 @@
     width:850px;
     margin:0 auto;
     margin-top:70px;
- 
+
 }
 form {
     margin-top:70px;
     width:100%;
     padding: 30px;
     border: 1px solid #f1f1f1;
-    background: rgba(189, 197, 197, 0.932);
+    background: rgba(240, 248, 255, 0.932);
 }
 #container h1{
     width: 60%;
@@ -38,11 +38,10 @@ button{
     border: none;
     cursor: pointer;
     width:80px;
-    
+
 }
 .example-margin {
     margin: 0 10px;
   }
 
 
-  
