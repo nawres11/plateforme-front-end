@@ -1,0 +1,55 @@
+
+
+
+mat-form-field{
+  width:100%;
+  height: 25px;
+}
+
+::placeholder{
+  font-size: 14px;
+}
+input{
+  padding-bottom: 4px;
+}
+
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.1em) scale(.75);
+  width: 133.33333%;
+}
+
+
+table{
+  height: 520px;
+}
+
+button{
+  background-color: rgb(139, 16, 16);
+  color:white;
+}
+.list-header-title{
+  color:black;
+  border-radius: 13px;
+
+}
+
+.list-viewer-wrapper{
+  margin-top: 60px;
+  border: 3px solid rgb(70, 65, 65) ! important;
+  border-radius: 15px ! important;
+  border-bottom-left-radius: 50px ! important;
+  border-bottom-right-radius: 50px ! important;
+  padding: 20px;
+;background-color:white;
+}
+mat-button-toggle-group{
+  margin-top: 13px;
+}
+
+
+
+
+

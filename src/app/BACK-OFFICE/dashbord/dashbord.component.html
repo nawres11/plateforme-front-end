@@ -1,0 +1,145 @@
+<app-back-office></app-back-office>
+<div id="container">
+  <div class="container-fluid" style="background-color: rgb(52, 58, 64);">
+    <div class="row" style="margin-left: 80px;">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <app-dashboard-card
+          [count]="serversCount$ | async"
+          [title]="'Serveurs'"
+          [errorMessage]="networkErrorMessage">
+        </app-dashboard-card>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <app-dashboard-card
+          [count]="projectsCount$ | async"
+          [title]="'Projets'"
+          [errorMessage]="networkErrorMessage">
+        </app-dashboard-card>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <app-dashboard-card
+          [count]="fluxCount$ | async"
+          [title]="'Flux'"
+          [errorMessage]="networkErrorMessage">
+        </app-dashboard-card>
+      </div>
+    </div>
+    <br /><br />
+    <div class="row" style="margin-right: 60px;">
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div
+            class="card-header card-header-success"
+            style="background-color: #b4dbeb;"
+          >
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Flux Par Serveurs</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div
+            class="card-header card-header-warning"
+            style="background-color: #b4dbeb;"
+          >
+            <div class="ct-chart" id="websiteViewsChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Flux par Projets</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div
+            class="card-header card-header-danger"
+            style="background-color: #b4dbeb;"
+          >
+            <div class="ct-chart" id="completedTasksChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Serveurs par projets</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <div class="col-lg-6 col-md-12" #TABLE #table>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Flux par Serveurs</h4>
+          <button (click)="ExportTOExcel()" class="btn btn-success" [disabled]="!(flux$ | async)">
+            <span class="glyphicon glyphicon-download-alt"></span
+            >&nbsp;ExportEnExcel
+          </button>
+        </div>
+      </div>
+      <div class="card-body table-responsive">
+        <table
+          class="table"
+          style="border: 1px black;"
+          *ngIf="flux$ | async as flux"
+        >
+          <thead class="text-info">
+            <th>Id</th>
+            <th>Type</th>
+            <th>Adresse Source</th>
+            <th>Adresse Destinataire</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of flux$ | async" style="color: white;">
+              <td>{{ f.id_flux }}</td>
+              <td>{{ f.type_flux }}</td>
+              <td>{{ f.adresse_source }}</td>
+              <td>{{ f.adresse_destinataire }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!(flux$ | async)" style="color: aliceblue;">
+          No Data to show
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-12" #TABLE1 #table1>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Projets</h4>
+          <button (click)="ExportTOExcel1()" class="btn btn-success" [disabled]="!(projects$ | async)">
+            <span class="glyphicon glyphicon-download-alt"></span
+            >&nbsp;ExportEnExcel
+          </button>
+        </div>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table" style="border: 1px black;" *ngIf="projects$ | async as flux">
+          <tr>
+            <th class="text-info">Projet</th>
+            <th class="text-info">Date de création</th>
+            <th class="text-info">Type</th>
+          </tr>
+          <tr style="color: white;" *ngFor="let project of (projects$ | async)">
+            <td>
+              {{project.intitule_projet}}
+            </td>
+            <td>
+              {{project.dateCreation}}
+            </td>
+            <td>
+              {{project.type_projet}}
+            </td>
+          </tr>
+        </table>
+        <div *ngIf="!(projects$ | async)" style="color: aliceblue;">
+          No Data to show
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br /><br />
+<br />
+<app-footer></app-footer>

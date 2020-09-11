@@ -1,0 +1,51 @@
+
+<div id="container">
+
+
+  <div>
+  <form>
+    <h1>Modification d'un serveur</h1>
+  <div class="form-group">
+  <label for="id">ID</label>
+  <input type="text" class="form-control" id="id" required  name="id">
+  </div>
+
+  <div class="form-group">
+  <label for="Intitule">Intitule</label>
+  <input type="text"class="form-control" id="intitule" required [(ngModel)]="server.intitule" name="intitule">
+  </div>
+  <div class="form-group">
+  <label for="port">Port</label>
+  <input type="text" class="form-control" id="port" required [(ngModel)]="server.port" name="port">
+  </div>
+
+  <div class="form-group">
+  <label for="url">URL</label>
+  <input type="text"class="form-control" id="url" required [(ngModel)]="server.url" name="url">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input type="text"class="form-control" id="type" required [(ngModel)]="server.type" name="type">
+    </div>
+  <div class="form-group">
+  <label for="projet">projet</label>
+  <select id="projet" required [(ngModel)]="server.projet" name="projet" class="form-control">
+    <option value="pj1">pj1</option><option value="pj2">pj2</option><option value="pj3">pj3</option></select>
+  </div>
+  <div class="form-group">
+    <label for="statut">Statut</label>
+    <input type="text"class="form-control" id="statut" required [(ngModel)]="server.statut" name="statut">
+    </div>
+
+
+  <div class="btn-group">
+  <button type="submit" class="btn btn-success" (click)="closeThis()">Submit</button>
+  </div>
+  </form>
+  </div>
+  </div>
+
+
+
+
+
