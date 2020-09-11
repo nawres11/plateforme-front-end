@@ -133,13 +133,18 @@
       </div>
       <div class="form-group">
         <label for="nature">Nature d'échange</label>
-        <input
+        <select
           type="text"
           class="form-control"
           id="nature"
           placeholder="Entrer une nature d'échange..."
           formControlName="natureEchange"
-        />
+          style="height: 35px"
+        >
+          <option value="Audit">Audit</option>
+          <option value="Projet">Projet</option>
+          <option value="Test">Test</option>
+        </select>
         <div *ngIf="fluxCreationForm.get('natureEchange').invalid && (fluxCreationForm.get('natureEchange').dirty || fluxCreationForm.get('natureEchange').touched)" class="alert alert-danger form-danger" role="alert">
           entrer une nature d'échange valide s'il vous plait
         </div>
