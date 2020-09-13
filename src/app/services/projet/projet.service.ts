@@ -35,4 +35,9 @@ export class ProjetService {
   updateProject(id: number, value: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
+
+  removeProject(id: number): Observable<any> {
+    this.projectCreatedSubject.next(true);
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

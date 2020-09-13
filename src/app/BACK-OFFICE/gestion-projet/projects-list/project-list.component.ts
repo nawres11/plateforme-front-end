@@ -83,6 +83,17 @@ export class ProjectListComponent implements OnInit {
     this.router.navigate(['admin/addProject']);
   }
 
+  removeProject(id: number) {
+    if (confirm(`Voulez-vous supprimer le projet #${id}`)) {
+      this.projectService.removeProject(id)
+        .pipe(first())
+        .subscribe(
+          success => console.log('Server deleted'),
+          error1 => console.error('Server deletion failed')
+        );
+    }
+  }
+
   closeAdd() {
     this.showDetails = false;
     this.showAddProject = false;
