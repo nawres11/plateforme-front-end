@@ -1,12 +1,12 @@
-import { ProjetService } from 'src/app/services/projet/projet.service';
-import { ServerService } from 'src/app/services/server/server.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Flux } from 'src/app/entities/Flux';
 import { FluxService } from '../../../services/flux/flux.service';
 import { tap } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Flux } from '../../../entities/Flux';
+import { ServerService } from '../../../services/server/server.service';
+import { ProjetService } from '../../../services/projet/projet.service';
 
 @Component({
   selector: 'app-create-opening-request',

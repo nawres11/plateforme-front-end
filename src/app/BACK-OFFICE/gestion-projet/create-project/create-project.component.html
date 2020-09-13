@@ -1,0 +1,61 @@
+<app-back-office></app-back-office>
+<div id="container">
+  <div [hidden]="submitted">
+    <form
+      [formGroup]="projectCreationForm"
+      (ngSubmit)="closeThis()"
+    >
+      <h1>Création d'un projet</h1>
+
+      <div class="form-group">
+        <label for="Intitule">Intitulé</label>
+        <input
+          type="text"
+          class="form-control"
+          id="intitule"
+          placeholder="Entrer l'intitulé du seveur..."
+          formControlName="intitule_projet"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label>Date de Creation</label>
+        <input
+          type="date"
+          class="form-control"
+          maxlength="5"
+          required
+          formControlName="dateCreation"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>type de projet</label>
+        <input
+          type="url"
+          class="form-control"
+          required
+          formControlName="type_projet"
+        />
+      </div>
+      <div class="form-group">
+        <label>Serveur</label>
+        <select
+          formControlName="id_server"
+          class="form-control"
+          style="height: 35px"
+        >
+          <option value="{{server.id_serveur}}" *ngFor="let server of (server$ | async)">#{{ server.id_serveur }}/{{server.intitule}}</option>
+        </select>
+
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn btn-success">
+          <span class="glyphicon glyphicon-plus"></span>ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-footer></app-footer>
+</div>

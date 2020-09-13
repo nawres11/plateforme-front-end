@@ -11,6 +11,7 @@ import { CreateOpeningRequestComponent } from './BACK-OFFICE/gestion-flux/create
 import { OpeningRequestComponent } from './BACK-OFFICE/gestion-flux/opening-request/opening-request.component';
 import { DashbordComponent } from './BACK-OFFICE/dashbord/dashbord.component';
 import { AuthGuard } from './auth.guard';
+import { CreateProjectComponent } from './BACK-OFFICE/gestion-projet/create-project/create-project.component';
 
 const routes: Routes = [
   { path: '', component: RegisterLoginComponent },
@@ -81,6 +82,11 @@ const routes: Routes = [
   {
     path: 'admin/ProjectList',
     component: ProjectListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/addProject',
+    component: CreateProjectComponent,
     canActivate: [AuthGuard],
   },
   // {

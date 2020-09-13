@@ -27,6 +27,11 @@ export class ProjetService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
+  createProject(project: object): Observable<any> {
+    this.projectCreatedSubject.next(true);
+    return this.http.post(`${this.baseUrl}`, project);
+  }
+
   updateProject(id: number, value: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }

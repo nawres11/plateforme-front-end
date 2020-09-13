@@ -1,0 +1,50 @@
+#container{
+    width:700px;
+    height: 1300px;
+    margin:0 auto;
+    margin-top:70px;
+}
+form {
+    margin-top:80px;
+    width:100%;
+    height: 800px;
+    padding: 30px;
+    border: 1px solid #f1f1f1;
+    background: rgba(240, 248, 255, 0.932);
+}
+#container h1{
+    width: 38%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    text-align: center;
+
+}
+
+/* Full-width inputs */
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 13px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+select {
+    height:40px;
+    border: 1px solid #ccc;
+}
+
+/* Set a style for all buttons */
+button{
+    background-color:rgb(13, 138, 40);
+    color: white;
+    margin-top: 25px;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    width:95px;
+
+}
