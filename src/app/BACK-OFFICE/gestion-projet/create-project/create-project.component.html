@@ -17,16 +17,20 @@
           formControlName="intitule_projet"
           required
         />
+        <div *ngIf="projectCreationForm.get('intitule_projet').invalid && (projectCreationForm.get('intitule_projet').dirty || projectCreationForm.get('intitule_projet').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer l'intitulé du projet s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label>Date de Creation</label>
         <input
           type="date"
           class="form-control"
-          maxlength="5"
-          required
           formControlName="dateCreation"
         />
+        <div *ngIf="projectCreationForm.get('dateCreation').invalid && (projectCreationForm.get('dateCreation').dirty || projectCreationForm.get('dateCreation').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner une date de création s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -37,6 +41,9 @@
           required
           formControlName="type_projet"
         />
+        <div *ngIf="projectCreationForm.get('type_projet').invalid && (projectCreationForm.get('type_projet').dirty || projectCreationForm.get('type_projet').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un type de projet s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label>Serveur</label>
@@ -47,11 +54,13 @@
         >
           <option value="{{server.id_serveur}}" *ngFor="let server of (server$ | async)">#{{ server.id_serveur }}/{{server.intitule}}</option>
         </select>
-
+        <div *ngIf="projectCreationForm.get('id_server').invalid && (projectCreationForm.get('id_server').dirty || projectCreationForm.get('id_server').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner un serveur s'il vous plait
+        </div>
       </div>
 
       <div class="btn-group">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" [disabled]="!projectCreationForm.valid">
           <span class="glyphicon glyphicon-plus"></span>ajouter
         </button>
       </div>

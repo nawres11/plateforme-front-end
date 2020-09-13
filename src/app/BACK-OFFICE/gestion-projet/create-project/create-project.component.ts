@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ServerService } from '../../../services/server/server.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProjetService } from '../../../services/projet/projet.service';
 import { Observable } from 'rxjs';
 
@@ -12,10 +12,10 @@ import { Observable } from 'rxjs';
 })
 export class CreateProjectComponent implements OnInit {
   public projectCreationForm = new FormGroup({
-    intitule_projet: new FormControl(),
-    dateCreation: new FormControl(),
-    type_projet: new FormControl(),
-    id_server: new FormControl(),
+    intitule_projet: new FormControl('', [Validators.required]),
+    dateCreation: new FormControl('', [Validators.required]),
+    type_projet: new FormControl('', [Validators.required]),
+    id_server: new FormControl('', [Validators.required]),
   });
 
   @Output() closeAll = new EventEmitter<boolean>();
