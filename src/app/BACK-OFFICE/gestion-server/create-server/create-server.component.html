@@ -1,7 +1,11 @@
 <app-back-office></app-back-office>
 <div id="container">
   <div [hidden]="submitted">
-    <form #myForm="ngForm" (ngSubmit)="closeThis()" *ngIf="server">
+    <form
+      [formGroup]="serverCreationForm"
+      (ngSubmit)="closeThis()"
+    >
+      {{ serverCreationForm.getRawValue() | json }}
       <h1>Création d'un serveur</h1>
 
       <div class="form-group">
@@ -11,14 +15,12 @@
           class="form-control"
           id="intitule"
           placeholder="Entrer l'intitulé du seveur..."
+          formControlName="intitule"
           required
-          [(ngModel)]="server.intitule"
-          name="intitule"
         />
       </div>
       <div class="form-group">
         <label for="port">Port</label>
-
         <input
           type="number"
           class="form-control"
@@ -26,8 +28,7 @@
           maxlength="5"
           placeholder="Entrer un port..."
           required
-          [(ngModel)]="server.port"
-          name="port"
+          formControlName="port"
         />
       </div>
 
@@ -39,7 +40,7 @@
           id="url"
           placeholder="Entrer l'URL du serveur.."
           required
-          [(ngModel)]="server.url"
+          formControlName="url"
           name="url"
         />
       </div>
@@ -48,46 +49,14 @@
         <select
           id="type"
           required
-          [(ngModel)]="server.type"
+          formControlName="type"
           name="Type"
           class="form-control"
-          style="height: 35px;"
+          style="height: 35px"
         >
           <option value="source">source</option>
           <option value="destinataire">destinataire</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label for="projet">projet</label>
-        <select
-          id="projet"
-          required
-          [(ngModel)]="server.projet"
-          name="projet"
-          class="form-control"
-          style="height: 35px;"
-          multiple
-        >
-          <option
-            *ngFor="let project of projectsList$ | async"
-            value="{{project.id_projet}}"
-            >#{{ project.id_projet }}/{{ project.intitule_projet }}</option
-          >
-        </select>
-        <!-- <ejs-multiselect
-          id="multiselectelement"
-          [value]="colorValues"
-          [dataSource]="projectsList$ | async"
-          (tagging)="onTagging($event)"
-          [mode]="box"
-          [placeholder]="waterMark"
-          [fields]="fields"
-        ></ejs-multiselect> -->
-        <!-- <ejs-multiselect
-          id="multiselectelement"
-          [dataSource]="projectsList$ | async"
-          [mode]="box"
-        ></ejs-multiselect> -->
       </div>
 
       <div class="form-group">
@@ -95,10 +64,10 @@
         <select
           id="statut"
           required
-          [(ngModel)]="server.statut"
+          formControlName="statut"
           name="Statut"
           class="form-control"
-          style="height: 35px;"
+          style="height: 35px"
         >
           <option value="stat1" selected>ouvert</option>
           <option value="stat2">fermé</option>
