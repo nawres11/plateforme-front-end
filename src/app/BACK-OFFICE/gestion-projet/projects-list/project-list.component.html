@@ -1,0 +1,222 @@
+<app-back-office></app-back-office>
+
+<div hidden>{{ reloadData$ | async }}</div>
+<div class="panel panel-primary" style="margin-top: 90px">
+  <div style="background-color: rgb(52, 58, 64)" class="panel-heading">
+    <h2>Liste des projets</h2>
+    <button
+      (click)="addProject()"
+      class="btn btn-success"
+      style="margin-left: 10px; float: right; margin-top: 45px"
+      disabled
+    >
+      <i class="material-icons">add</i>Ajouter
+    </button>
+  </div>
+
+  <div style="margin-left: 350px">
+    <span class="glyphicon glyphicon-search"></span>
+    <mat-form-field class="search-form-field">
+      <input
+        matInput
+        [(ngModel)]="searchKey"
+        placeholder="Search"
+        autocomplete="off"
+        (keyup)="applyFilter()"
+      />
+      <button
+        class="btn btn-info"
+        *ngIf="searchKey"
+        (click)="onSearchClear()"
+      ></button>
+    </mat-form-field>
+  </div>
+
+  <div class="panel-body">
+    <div>
+      <table
+        class="table table-striped table-bordered"
+        style="margin-right: 20px; margin-top: 50px; border-color: black"
+      >
+        <thead class="thead-light">
+          <tr>
+            <th>Id</th>
+            <th>Intitule</th>
+            <th>Type</th>
+            <th>Date de création</th>
+            <th>Acion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects" class="{{ project.class }}">
+            <td>{{ project.id_projet }}</td>
+            <td>{{ project.intitule_projet }}</td>
+            <td>{{ project.type_projet }}</td>
+            <td>{{ project.dateCreation }}</td>
+            <td style="width: 180px">
+              <!--modal popup-->
+              <button
+                type="button"
+                class="btn btn-info"
+                style="margin-left: 10px"
+                data-toggle="modal"
+                data-target="#myModal1"
+                title="détails"
+                (click)="details(project.id_projet)"
+              >
+                <span class="glyphicon glyphicon-th-list"></span>
+              </button>
+
+              <!--update-->
+              <button
+                type="button"
+                class="btn btn-info"
+                style="margin-left: 10px"
+                data-toggle="modal"
+                data-target="#Modal1"
+                title="détails"
+                (click)="details(project.id_projet)"
+              >
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="showAddProject" class="formStyleContainer">
+    <div class="formStyle">
+      <app-create-server
+        (closeAll)="closeAddFromAdd($event)"
+      ></app-create-server>
+      <button
+        style="margin-left: 20%; margin-top: -13%; float: bottom"
+        class="btn btn-dribbble"
+        (click)="closeAdd()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Details -->
+<div id="myModal1" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center">
+          Détails d'un projet
+        </h4>
+      </div>
+      <div *ngIf="!currentProject">Loading ...</div>
+      <div class="modal-body">
+        <div
+          *ngIf="currentProject"
+          class="{{ currentProject.class }}"
+        >
+          <label><b>Id: </b></label>
+          {{ currentProject.id_projet }} <br />
+          <label><b>Intitule: </b></label>
+          {{ currentProject.intitule_projet }}<br />
+          <label><b>Type: </b></label>
+          {{ currentProject.type_projet}}<br />
+          <label><b>Date de création: </b></label>
+          {{ currentProject.dateCreation}}<br />
+          <label><b>Serveur: </b></label>
+          #{{ currentProject.server?.id_serveur}}/{{currentProject.server?.intitule}}<br />
+        </div>
+      </div>
+      <div class="modal-footer" data-target="#myModal3">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Update -->
+<div id="Modal1" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center">
+          Modifier un projet
+        </h4>
+      </div>
+      {{currentProject | json}}
+      <form class="modal-body" [formGroup]="projectModificationForm">
+        <div *ngIf="!currentProject">Loading ...</div>
+        <div
+          *ngIf="currentProject"
+          class="{{ currentProject.class }}"
+        >
+          <div class="form-group">
+            <label>Intitule</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="intitule_projet"
+              [value]="currentProject.intitule_projet"
+            />
+          </div>
+          <div class="form-group">
+            <label>Date de création</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="dateCreation"
+              [value]="currentProject.dateCreation"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Type</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="type_projet"
+              [value]="currentProject.type_projet"
+            />
+          </div>
+          <div class="form-group">
+            <label>Id serveur</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="id_server"
+              [value]="currentProject.server?.id_serveur"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer" data-target="#Modal3">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          <i class="material-icons">close</i>Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-dismiss="modal"
+          (click)="updateServer(currentProject.id_projet)"
+        >
+          <i class="material-icons">update</i>&nbsp;Modifier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

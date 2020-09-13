@@ -1,3 +1,4 @@
+import { ProjectListComponent } from './BACK-OFFICE/gestion-projet/projects-list/project-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RegisterLoginComponent } from './FRONT-OFFICE/register-Login/register-login.component';
@@ -76,6 +77,27 @@ const routes: Routes = [
     component: DashbordComponent,
     canActivate: [AuthGuard],
   },
+  // ----------------
+  {
+    path: 'admin/ProjectList',
+    component: ProjectListComponent,
+    canActivate: [AuthGuard],
+  },
+  // {
+  //   path: 'user/addFlux',
+  //   component: CreateOpeningRequestComponent,
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'admin/FluxList',
+  //   component: FluxListComponent,
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'admin/addFlux',
+  //   component: CreateOpeningRequestComponent,
+  //   canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({

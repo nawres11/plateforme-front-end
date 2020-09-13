@@ -1,14 +1,20 @@
 import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Projet } from '../../entities/Projet';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjetService {
   private baseUrl = `${SERVER_URL}/rest/projects`;
+  public projectCreatedSubject = new BehaviorSubject<boolean>(false);
+  public projectCreated$ = this.projectCreatedSubject
+    .asObservable()
+    .pipe(filter((projectCreated) => {
+      return !!projectCreated;
+    }));
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +22,12 @@ export class ProjetService {
   getProjects() {
     return this.http.get(`${this.baseUrl}`);
   }
+
   getProjecttById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  updateProject(id: number, value: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 }
