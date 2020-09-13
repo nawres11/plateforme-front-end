@@ -124,69 +124,65 @@
                         Modifier un serveur
                       </h4>
                     </div>
-                    <div class="modal-body">
+                    <form class="modal-body" [formGroup]="serverModificationForm">
+                      <div *ngIf="!currentServer">Loading ...</div>
                       <div
-                        *ngIf="currentServer != null"
+                        *ngIf="currentServer"
                         class="{{ currentServer.class }}"
                       >
                         <div class="form-group">
-                          <label for="Intitule">Intitule</label>
+                          <label>Intitule</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="intitule"
                             required
-                            [(ngModel)]="currentServer.intitule"
-                            name="intitule"
+                            formControlName="intitule"
+                            [value]="currentServer.intitule"
                           />
                         </div>
                         <div class="form-group">
-                          <label for="port">Port</label>
+                          <label>Port</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="port"
                             required
-                            [(ngModel)]="currentServer.port"
-                            name="port"
+                            formControlName="port"
+                            [value]="currentServer.port"
                           />
                         </div>
 
                         <div class="form-group">
-                          <label for="url">URL</label>
+                          <label>URL</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="url"
                             required
-                            [(ngModel)]="currentServer.url"
-                            name="url"
+                            formControlName="url"
+                            [value]="currentServer.url"
                           />
                         </div>
                         <div class="form-group">
-                          <label for="type">Type</label>
+                          <label>Type</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="type"
                             required
-                            [(ngModel)]="currentServer.type"
-                            name="type"
+                            formControlName="type"
+                            [value]="currentServer.type"
                           />
                         </div>
                         <div class="form-group">
-                          <label for="statut">Statut</label>
+                          <label>Statut</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="statut"
                             required
-                            [(ngModel)]="currentServer.statut"
-                            name="statut"
+                            formControlName="statut"
+                            [value]="currentServer.statut"
                           />
                         </div>
                       </div>
-                    </div>
+                    </form>
                     <div class="modal-footer" data-target="#Modal3">
                       <button
                         type="button"

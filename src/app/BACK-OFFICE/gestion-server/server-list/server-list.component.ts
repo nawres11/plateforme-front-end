@@ -4,6 +4,7 @@ import { Serveur } from '../../../entities/Serveur';
 import { ServerService } from '../../../services/server/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap, delay, first } from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-server-list',
@@ -22,8 +23,15 @@ export class ServerListComponent implements OnInit {
     delay(600),
     tap((serverCreated) => this.reloadData())
   );
-
   public currentServer = null;
+  public serverModificationForm = new FormGroup({
+    intitule: new FormControl(),
+    port: new FormControl(),
+    url: new FormControl(),
+    type: new FormControl(),
+    statut: new FormControl(),
+  });
+
   public searchKey: string;
 
   constructor(
