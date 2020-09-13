@@ -33,7 +33,6 @@
 
   <div class="panel-body">
     <div *ngIf="servers != null">
-      <!-- {{servers[0] | json}} -->
       <table
         class="table table-striped table-bordered"
         style="margin-right: 20px; margin-top: 50px; border-color: black"
@@ -50,7 +49,6 @@
             <td>{{ server.id_serveur }}</td>
             <td>{{ server.intitule }}</td>
             <td style="width: 180px">
-              <!--  <button (click)=" details(server.id_serveur)" class="btn btn-dark" style="margin-left: 10px"><span class="glyphicon glyphicon-th-list" ></span></button>-->
               <!--modal popup-->
               <button
                 type="button"
@@ -63,45 +61,6 @@
               >
                 <span class="glyphicon glyphicon-th-list"></span>
               </button>
-              <div id="myModal1" class="modal" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" style="text-align: center">
-                        Détails d'un serveur
-                      </h4>
-                    </div>
-                    <div class="modal-body">
-                      <div
-                        *ngIf="currentServer != null"
-                        class="{{ currentServer.class }}"
-                      >
-                        <label><b>Id: </b></label>
-                        {{ currentServer.id_serveur }} <br />
-                        <label><b>Intitule: </b></label>
-                        {{ currentServer.intitule }}<br />
-                        <label><b>Port: </b></label> {{ currentServer.port
-                        }}<br />
-                        <label><b>Url: </b></label> {{ currentServer.url
-                        }}<br />
-                        <label><b>Type: </b></label> {{ currentServer.type
-                        }}<br />
-                        <label><b>Statut: </b></label> {{ currentServer.statut
-                        }}<br />
-                      </div>
-                    </div>
-                    <div class="modal-footer" data-target="#myModal3">
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        data-dismiss="modal"
-                      >
-                        Annuler
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <!--update-->
               <!--<button (click)="updateServer(server.id_serveur)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button> -->
               <button
@@ -115,94 +74,6 @@
               >
                 <span class="glyphicon glyphicon-pencil"></span>
               </button>
-
-              <div id="Modal1" class="modal" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" style="text-align: center">
-                        Modifier un serveur
-                      </h4>
-                    </div>
-                    <form class="modal-body" [formGroup]="serverModificationForm">
-                      <div *ngIf="!currentServer">Loading ...</div>
-                      <div
-                        *ngIf="currentServer"
-                        class="{{ currentServer.class }}"
-                      >
-                        <div class="form-group">
-                          <label>Intitule</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            required
-                            formControlName="intitule"
-                            [value]="currentServer.intitule"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label>Port</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            required
-                            formControlName="port"
-                            [value]="currentServer.port"
-                          />
-                        </div>
-
-                        <div class="form-group">
-                          <label>URL</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            required
-                            formControlName="url"
-                            [value]="currentServer.url"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label>Type</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            required
-                            formControlName="type"
-                            [value]="currentServer.type"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label>Statut</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            required
-                            formControlName="statut"
-                            [value]="currentServer.statut"
-                          />
-                        </div>
-                      </div>
-                    </form>
-                    <div class="modal-footer" data-target="#Modal3">
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        data-dismiss="modal"
-                      >
-                        <i class="material-icons">close</i>Annuler
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-success"
-                        data-dismiss="modal"
-                        (click)="updateServer(currentServer.id_serveur)"
-                      >
-                        <i class="material-icons">update</i>&nbsp;Modifier
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </td>
           </tr>
         </tbody>
@@ -222,6 +93,134 @@
       >
         Cancel
       </button>
+    </div>
+  </div>
+</div>
+<!-- details -->
+<div id="myModal1" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center">
+          Détails d'un serveur
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div
+          *ngIf="currentServer != null"
+          class="{{ currentServer.class }}"
+        >
+          <label><b>Id: </b></label>
+          {{ currentServer.id_serveur }} <br />
+          <label><b>Intitule: </b></label>
+          {{ currentServer.intitule }}<br />
+          <label><b>Port: </b></label> {{ currentServer.port
+          }}<br />
+          <label><b>Url: </b></label> {{ currentServer.url
+          }}<br />
+          <label><b>Type: </b></label> {{ currentServer.type
+          }}<br />
+          <label><b>Statut: </b></label> {{ currentServer.statut
+          }}<br />
+        </div>
+      </div>
+      <div class="modal-footer" data-target="#myModal3">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- update -->
+<div id="Modal1" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center">
+          Modifier un serveur
+        </h4>
+      </div>
+      <form class="modal-body" [formGroup]="serverModificationForm">
+        <div *ngIf="!currentServer">Loading ...</div>
+        <div
+          *ngIf="currentServer"
+          class="{{ currentServer.class }}"
+        >
+          <div class="form-group">
+            <label>Intitule</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="intitule"
+              [value]="currentServer.intitule"
+            />
+          </div>
+          <div class="form-group">
+            <label>Port</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="port"
+              [value]="currentServer.port"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>URL</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="url"
+              [value]="currentServer.url"
+            />
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="type"
+              [value]="currentServer.type"
+            />
+          </div>
+          <div class="form-group">
+            <label>Statut</label>
+            <input
+              type="text"
+              class="form-control"
+              required
+              formControlName="statut"
+              [value]="currentServer.statut"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer" data-target="#Modal3">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          <i class="material-icons">close</i>Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-dismiss="modal"
+          (click)="updateServer(currentServer.id_serveur)"
+        >
+          <i class="material-icons">update</i>&nbsp;Modifier
+        </button>
+      </div>
     </div>
   </div>
 </div>
