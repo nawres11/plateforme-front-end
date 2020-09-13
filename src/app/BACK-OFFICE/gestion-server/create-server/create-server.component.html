@@ -5,7 +5,6 @@
       [formGroup]="serverCreationForm"
       (ngSubmit)="closeThis()"
     >
-      {{ serverCreationForm.getRawValue() | json }}
       <h1>Création d'un serveur</h1>
 
       <div class="form-group">
@@ -18,6 +17,9 @@
           formControlName="intitule"
           required
         />
+        <div *ngIf="serverCreationForm.get('intitule').invalid && (serverCreationForm.get('intitule').dirty || serverCreationForm.get('intitule').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un intitulé du projet s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="port">Port</label>
@@ -27,13 +29,15 @@
           id="port"
           maxlength="5"
           placeholder="Entrer un port..."
-          required
           formControlName="port"
         />
+        <div *ngIf="serverCreationForm.get('port').invalid && (serverCreationForm.get('port').dirty || serverCreationForm.get('port').touched)" class="alert alert-danger form-danger" role="alert">
+          le port est obligatoire et doit etre compris entre 1024 et 49151
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="url">URL</label>
+        <label for="url">adresse IPv4</label>
         <input
           type="url"
           class="form-control"
@@ -43,6 +47,9 @@
           formControlName="url"
           name="url"
         />
+        <div *ngIf="serverCreationForm.get('url').invalid && (serverCreationForm.get('url').dirty || serverCreationForm.get('url').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1, Ex: 255.255.255.255
+        </div>
       </div>
       <div class="form-group">
         <label for="type">Type</label>
@@ -57,6 +64,9 @@
           <option value="source">source</option>
           <option value="destinataire">destinataire</option>
         </select>
+        <div *ngIf="serverCreationForm.get('type').invalid && (serverCreationForm.get('type').dirty || serverCreationForm.get('type').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un type s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -69,13 +79,16 @@
           class="form-control"
           style="height: 35px"
         >
-          <option value="stat1" selected>ouvert</option>
-          <option value="stat2">fermé</option>
+          <option value="ouvert" selected>ouvert</option>
+          <option value="fermé">fermé</option>
         </select>
+        <div *ngIf="serverCreationForm.get('statut').invalid && (serverCreationForm.get('statut').dirty || serverCreationForm.get('statut').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un statut s'il vous plait
+        </div>
       </div>
 
       <div class="btn-group">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" [disabled]="!serverCreationForm.valid">
           <span class="glyphicon glyphicon-plus"></span>ajouter
         </button>
       </div>

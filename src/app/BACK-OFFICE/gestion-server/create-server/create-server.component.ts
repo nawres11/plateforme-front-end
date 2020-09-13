@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ServerService } from '../../../services/server/server.service';
 import { Router } from '@angular/router';
 import { ProjetService } from 'src/app/services/projet/projet.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-server',
@@ -11,11 +11,20 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class CreateServerComponent implements OnInit {
   public serverCreationForm = new FormGroup({
-    intitule: new FormControl(),
-    port: new FormControl(),
-    url: new FormControl(),
-    type: new FormControl(),
-    statut: new FormControl(),
+    intitule: new FormControl('', [Validators.required]),
+    port: new FormControl('', [
+      Validators.required,
+      Validators.min(1024),
+      Validators.max(49151),
+    ]),
+    url: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        '((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(.(?!$)|$)){4}'
+      ),
+    ]),
+    type: new FormControl('', [Validators.required]),
+    statut: new FormControl('', [Validators.required]),
   });
   @Output() closeAll = new EventEmitter<boolean>();
   submitted = false;
@@ -23,7 +32,7 @@ export class CreateServerComponent implements OnInit {
   constructor(
     private serverService: ServerService,
     private router: Router,
-    private projectsService: ProjetService,
+    private projectsService: ProjetService
   ) {}
 
   ngOnInit() {
@@ -31,10 +40,15 @@ export class CreateServerComponent implements OnInit {
   }
 
   save() {
-    this.serverService.createServer(this.serverCreationForm.getRawValue()).subscribe(
-      (data) => alert('server created'),
-      (error1) => {console.log(error1); alert('an error has occured'); }
-    );
+    this.serverService
+      .createServer(this.serverCreationForm.getRawValue())
+      .subscribe(
+        (data) => alert('server created'),
+        (error1) => {
+          console.log(error1);
+          alert('an error has occured');
+        }
+      );
     this.serverCreationForm.reset();
     this.goToList();
   }
