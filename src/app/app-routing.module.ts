@@ -10,8 +10,8 @@ import { CreateOpeningRequestComponent } from './BACK-OFFICE/gestion-flux/create
 import { OpeningRequestComponent } from './BACK-OFFICE/gestion-flux/opening-request/opening-request.component';
 import { DashbordComponent } from './BACK-OFFICE/dashbord/dashbord.component';
 import {HomeComponent} from './FRONT-OFFICE/home/home.component';
-import {ProjetListComponent} from './BACK-OFFICE/gestion-projet/projet-list/projet-list.component';
-import {CreateProjetComponent}from './BACK-OFFICE/gestion-projet/create-projet/create-projet.component';
+import {ProjectListComponent} from './BACK-OFFICE/gestion-projet/projects-list/project-list.component';
+import {CreateProjectComponent}from './BACK-OFFICE/gestion-projet/create-project/create-project.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -51,13 +51,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/ProjetList',
-    component: ProjetListComponent,
+    path: 'admin/ProjectList',
+    component: ProjectListComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/addProjet',
-    component: CreateProjetComponent,
+    path: 'admin/addProject',
+    component: CreateProjectComponent,
     canActivate: [AuthGuard],
   },
 

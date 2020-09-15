@@ -1,66 +1,68 @@
 <app-back-office></app-back-office>
 <div id="container">
   <div [hidden]="submitted">
-    <form #myForm="ngForm">
+    <form #myForm="ngForm" [formGroup]="fluxCreationForm" (ngSubmit)="closeThis()">
       <h1>Création d'une demande d'ouverture de flux</h1>
       <div class="form-group">
-        <label for="cadre">Cadre de la demande<abbr title="Ce champ est obligatoire">*</abbr></label>
+        <label for="cadre">Cadre de la demande <abbr title="Ce champ est obligatoire">*</abbr></label>
         <input
           type="text"
           class="form-control"
           id="cadre"
           placeholder="Entrer le cadre de la demande... "
-          required
-          [(ngModel)]="flux.cadre"
-          name="cadre"
+          formControlName="cadre"
         />
+        <div *ngIf="fluxCreationForm.get('cadre').invalid && (fluxCreationForm.get('cadre').dirty || fluxCreationForm.get('cadre').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un cadre s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="projet">Projet<abbr title="Ce champ est obligatoire">*</abbr></label>
+        <label for="projet">Projet <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="projet"
-          required
-          [(ngModel)]="flux.id_projet"
-          name="id_projet"
+          formControlName="id_projet"
           class="form-control"
           style="height: 35px"
         >
           <option value="{{project.id_projet}}" *ngFor="let project of (projects$ | async)">#{{ project.id_projet }}</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('id_projet').invalid && (fluxCreationForm.get('id_projet').dirty || fluxCreationForm.get('id_projet').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner un projet s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="server">Server<abbr title="Ce champ est obligatoire">*</abbr></label>
+        <label for="server">Server <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="sever"
           required
-          [(ngModel)]="flux.id_serveur"
-          name="id_serveur"
+          formControlName="id_serveur"
           class="form-control"
           style="height: 35px"
           (change)="onChange($event.target.value)"
         >
           <option value="{{server.id_serveur}}" *ngFor="let server of (server$ | async)">#{{ server.id_serveur }}/{{ server.intitule }}</option>
         </select>
-      </div>
-      <div style="color: yellow;">
-        {{relatedServer | json}}
+        <div *ngIf="fluxCreationForm.get('id_serveur').invalid && (fluxCreationForm.get('id_serveur').dirty || fluxCreationForm.get('id_serveur').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner un serveur s'il vous plait
+        </div>
       </div>
       <div hidden>
         {{relatedServer$ | async}}
       </div>
       <div class="form-group">
-        <label for="adressSource">Adresse Source<abbr title="Ce champ est obligatoire">*</abbr></label>
+        <label for="adressSource">Adresse Source <abbr title="Ce champ est obligatoire">*</abbr></label>
         <input
           type="text"
           class="form-control"
           placeholder="Entrer l'adresse Source..."
-          required
-          [(ngModel)]="flux.adresse_source"
-          name="adresseS"
+          formControlName="adresse_source"
           value="{{relatedServer?.url}}"
         />
+        <div *ngIf="fluxCreationForm.get('adresse_source').invalid && (fluxCreationForm.get('adresse_source').dirty || fluxCreationForm.get('adresse_source').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1
+        </div>
       </div>
       <div class="form-group">
         <label for="adressDestinataire">Adresse Destinataire <abbr title="Ce champ est obligatoire">*</abbr></label>
@@ -69,10 +71,11 @@
           class="form-control"
           id="adresseD"
           placeholder="Entrer l'adresse Destinataire..."
-          required
-          [(ngModel)]="flux.adresse_destinataire"
-          name="adresseD"
+          formControlName="adresse_destinataire"
         />
+        <div *ngIf="fluxCreationForm.get('adresse_destinataire').invalid && (fluxCreationForm.get('adresse_destinataire').dirty || fluxCreationForm.get('adresse_destinataire').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1
+        </div>
       </div>
       <div class="form-group">
         <label for="port">Port <abbr title="Ce champ est obligatoire">*</abbr></label>
@@ -81,72 +84,85 @@
           class="form-control"
           id="port"
           placeholder="Entrer un port..."
-          required
-          [(ngModel)]="flux.port"
-          name="port"
           value="{{relatedServer?.port}}"
+          formControlName="port"
         />
+        <div *ngIf="fluxCreationForm.get('port').invalid && (fluxCreationForm.get('port').dirty || fluxCreationForm.get('port').touched)" class="alert alert-danger form-danger" role="alert">
+          le port est obligatoire et doit etre compris entre 1024 et 49151
+        </div>
       </div>
-      
+
+      <div class="form-group">
+        <label for="duree">Durée <abbr title="Ce champ est obligatoire">*</abbr></label>
+        <input
+          type="number"
+          class="form-control"
+          id="duree"
+          placeholder="Entrer une durée..."
+          formControlName="duree"
+        />
+        <div *ngIf="fluxCreationForm.get('duree').invalid && (fluxCreationForm.get('duree').dirty || fluxCreationForm.get('duree').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une durée valide s'il vous plait
+        </div>
+      </div>
       <div class="form-group">
         <label for="date">Date d'ouverture <abbr title="Ce champ est obligatoire">*</abbr></label>
-        <!--<input type="text"
-          class="form-control" id="date"
-          placeholder="jj/mm/aaaa"required [(ngModel)]="flux.dateOuverture" name="date"
-        />-->
         <input
-           matInput
-           [max]="maxDate"
-           [min]="minDate"
-           #date
-           required
-           [matDatepicker]="picker"
-           placeholder="JJ/MM/YYYY"
-           class="form-control"
-           name="date"
-           [(ngModel)]="flux.dateOuverture">
-
-         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-         <mat-datepicker #picker></mat-datepicker>
+          type="date"
+          class="form-control"
+          id="date"
+          placeholder="jj/mm/aaaa"
+          formControlName="dateOuverture"
+        />
+        <div *ngIf="fluxCreationForm.get('dateOuverture').invalid && (fluxCreationForm.get('dateOuverture').dirty || fluxCreationForm.get('dateOuverture').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner une date valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="periodicite">Périodicité <abbr title="Ce champ est obligatoire">*</abbr></label>
         <input
-          type="number"
+          type="text"
           class="form-control"
           id="periodicite"
           placeholder="Entrer une périodicité..."
-          required
-          [(ngModel)]="flux.periodicite"
-          name="periodicite"
+          formControlName="periodicite"
         />
+        <div *ngIf="fluxCreationForm.get('periodicite').invalid && (fluxCreationForm.get('periodicite').dirty || fluxCreationForm.get('periodicite').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une périodicité valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
-        <label for="nature">Nature d'échange<abbr title="Ce champ est obligatoire">*</abbr></label>
-        <input
+        <label for="nature">Nature d'échange <abbr title="Ce champ est obligatoire">*</abbr></label>
+        <select
           type="text"
           class="form-control"
           id="nature"
           placeholder="Entrer une nature d'échange..."
-          required
-          [(ngModel)]="flux.natureEchange"
-          name="nat"
-        />
+          formControlName="natureEchange"
+          style="height: 35px"
+        >
+          <option value="Audit">Audit</option>
+          <option value="Projet">Projet</option>
+          <option value="Test">Test</option>
+        </select>
+        <div *ngIf="fluxCreationForm.get('natureEchange').invalid && (fluxCreationForm.get('natureEchange').dirty || fluxCreationForm.get('natureEchange').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une nature d'échange valide s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="type">Type <abbr title="Ce champ est obligatoire">*</abbr></label>
-
         <select
           id="type"
-          required
-          [(ngModel)]="flux.type_flux"
-          name="Type"
           class="form-control"
           style="height: 35px"
+          formControlName="type_flux"
         >
           <option value="interne">interne</option>
           <option value="externe">externe</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('type_flux').invalid && (fluxCreationForm.get('type_flux').dirty || fluxCreationForm.get('type_flux').touched)" class="alert alert-danger form-danger" role="alert">
+          selectionner le type du flux s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Description <abbr title="Ce champ est obligatoire">*</abbr></label>
@@ -155,42 +171,47 @@
           class="form-control"
           id="description"
           placeholder="description"
-          required
-          [(ngModel)]="flux.description"
-          name="description"
+          formControlName="description"
         />
+        <div *ngIf="fluxCreationForm.get('description').invalid && (fluxCreationForm.get('description').dirty || fluxCreationForm.get('description').touched)" class="alert alert-danger form-danger" role="alert">
+          écrire un déscription pour votre flux s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
         <label for="statut">Statut <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="statut"
-          required
-          [(ngModel)]="flux.statut"
-          name="Statut"
+          formControlName="statut"
           class="form-control"
           style="height: 35px"
         >
           <option value="entrant" selected>entrant</option>
           <option value="sortant">sortant</option>
         </select>
+        <div *ngIf="fluxCreationForm.get('statut').invalid && (fluxCreationForm.get('statut').dirty || fluxCreationForm.get('statut').touched)" class="alert alert-danger form-danger" role="alert">
+          sélectionner un statut pour votre flux s'il vous plait
+        </div>
       </div>
-      <!-- @TODO add server and project dropdowns -->
-    </form>
-  </div>
-  <button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid">
+    
+ 
+    <button type="submit" class="btn btn-success" [disabled]="!fluxCreationForm.valid">
+      <span class="glyphicon glyphicon-plus"></span>ajouter
+    </button>
+  </form>
+</div>
+  <!--<button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid" [disabled]="!fluxCreationForm.valid">
     Valider
   </button>
-  <!-- The Modal -->
   <div class="modal" id="Modalvalid">
     <div class="modal-dialog">
       <div class="modal-content">
-        <!-- Modal Header -->
+       
         <div class="modal-header">
           <h4 class="modal-title">Voulez vous valider cette demande ?</h4>
         </div>
 
-        <!-- Modal footer -->
+      
         <div class="modal-footer">
           <br /><br /><br />
           <button
@@ -213,8 +234,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <br /><br />
+  </div>-->
   <app-footer></app-footer>
 </div>

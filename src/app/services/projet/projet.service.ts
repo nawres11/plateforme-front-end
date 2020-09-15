@@ -1,36 +1,43 @@
 import { SERVER_URL } from '../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Projet } from '../../entities/Projet';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjetService {
-  projects: any = [];
+  private baseUrl = `${SERVER_URL}/rest/projects`;
   public projectCreatedSubject = new BehaviorSubject<boolean>(false);
   public projectCreated$ = this.projectCreatedSubject
     .asObservable()
     .pipe(filter((projectCreated) => {
       return !!projectCreated;
     }));
-  private baseUrl = `${SERVER_URL}/rest/projects`;
 
   constructor(private http: HttpClient) {}
 
- 
+  projects: any = [];
   getProjects() {
     return this.http.get(`${this.baseUrl}`);
   }
+
   getProjecttById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
-  
+
   createProject(project: object): Observable<any> {
     this.projectCreatedSubject.next(true);
     return this.http.post(`${this.baseUrl}`, project);
   }
 
+  updateProject(id: number, value: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
+  }
+
+  removeProject(id: number): Observable<any> {
+    this.projectCreatedSubject.next(true);
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

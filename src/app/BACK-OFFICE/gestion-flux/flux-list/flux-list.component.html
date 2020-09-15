@@ -1,12 +1,12 @@
 <app-back-office></app-back-office>
 <br>
+<div hidden>{{ reloadData$ | async }}</div>
 <div class="panel panel-primary">
   <div style="background-color: rgb(52,58,64); margin-top: 75px" class="panel-heading">
     <h2>Liste des flux inter-serveurs</h2>
     <button (click)="addFlux()" class="btn btn-success" style="margin-left:20px; float: right; margin-top:45px"><span
         class="glyphicon glyphicon-plus"></span>&nbsp;Ajouter</button>
-    <button (click)="validate()" class="btn btn-info" style="margin-left:20px; float: right; margin-top:45px">Demandes
-      crées</button>
+    
   </div><br>
   <!-- <div style="margin-left: 350px;">
     <span class="glyphicon glyphicon-search"></span>
@@ -26,33 +26,80 @@
           <th>Adresse destination</th>
           <th>Port</th>
           <th>type flux</th>
-          <!--<th>Durée</th>-->
-          <!-- @ add periodicite & description attributes in API response-->
           <th>Périodicité</th>
+          <th>Durée</th>
           <th>Description</th> 
           <th>Date d'ouverture</th>
           <th>Nature d'échange</th>
           <th>Statut</th>
+          <th>Actions</th>
 
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let flux of fluxs |async" class="{{flux.class}}">
+        <tr *ngFor="let flux of fluxs " class="{{flux.class}}">
           <td>{{ flux.adresse_source }}</td>
           <td>{{ flux.adresse_destinataire }}</td>
           <td>{{ flux.port }}</td>
           <td>{{ flux.type_flux }}</td>
-          <!--<td>{{ flux.duree }}</td>-->
           <td>{{ flux.periodicite }}</td>
+          <td>{{ flux.duree}}</td>
           <td>{{ flux.description}}</td> 
           <td>{{ flux.dateOuverture }}</td>
           <td>{{ flux.natureEchange }}</td>
           <td>{{ flux.statut }}</td>
-        </tr>
-      </tbody>
-    </table>
+          <td>
+            <!--<button (click)="validate()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>&nbsp;Demandes
+              crées</button>-->
+     <button class="btn btn-success" data-toggle="modal" data-target="#Modalvalid" [disabled]="!fluxCreationForm.valid">
+      <span class="glyphicon glyphicon-ok"></span>
+  </button>
+  <div class="modal" id="Modalvalid">
+    <div class="modal-dialog">
+      <div class="modal-content">
+       
+        <div class="modal-header">
+          <h4 class="modal-title">Voulez vous valider cette demande ?</h4>
+        </div>
+
+      
+        <div class="modal-footer">
+          <br /><br /><br />
+          <button
+            type="button"
+            style="background-color: grey; padding: 10px; margin: 10px"
+            class="btn btn-danger"
+            data-dismiss="modal"
+          >
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Annuler
+          </button>
+          <button
+            type="button"
+            style="background-color: green; padding: 10px; margin: 10px"
+            class="btn btn-success"
+            data-dismiss="modal"
+            (click)="validate()"
+          >
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;Valider
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <br> <br>
+
+    <button
+      type="button"
+       class="btn btn-danger"
+       style="margin-left: 10px"
+       (click)="removeFlux(flux.id_flux)"
+        > <span class="glyphicon glyphicon-trash"></span>
+    </button>
+   </td>
+    </tr>
+  </tbody>
+ </table>
+</div>
+<br> <br>
 
 </div>
 <br /><br> <br><br />

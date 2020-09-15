@@ -56,8 +56,9 @@ import { CreateOpeningRequestComponent } from './BACK-OFFICE/gestion-flux/create
 import { httpInterceptorProviders } from './services/auth/auth-interceptor';
 import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DashboardCardComponent } from './BACK-OFFICE/dashbord/dashboard-card/dashboard-card.component';
-import { ProjetListComponent } from './BACK-OFFICE/gestion-projet/projet-list/projet-list.component';
-import { CreateProjetComponent } from './BACK-OFFICE/gestion-projet/create-projet/create-projet.component';
+import { ProjectListComponent } from './BACK-OFFICE/gestion-projet/projects-list/project-list.component';
+import { CreateProjectComponent } from './BACK-OFFICE/gestion-projet/create-project/create-project.component';
+
 
 @NgModule({
   declarations: [
@@ -79,8 +80,8 @@ import { CreateProjetComponent } from './BACK-OFFICE/gestion-projet/create-proje
     DashbordComponent,
     OpeningRequestComponent,
     DashboardCardComponent,
-    ProjetListComponent,
-    CreateProjetComponent,
+    ProjectListComponent,
+    CreateProjectComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,8 @@
 <app-back-office></app-back-office>
 <div id="container">
   <div [hidden]="submitted">
-    <form #myForm="ngForm" (ngSubmit)="closeThis()" *ngIf="server">
+    <form  #myForm="ngForm" [formGroup]="serverCreationForm" (ngSubmit)="closeThis()" >
+     
       <h1>Création d'un serveur</h1>
 
       <div class="form-group">
@@ -10,12 +11,13 @@
           type="text"
           class="form-control"
           id="intitule"
-          pattern="[A-za-z]{3,9}"
-          placeholder="Entrer l'intitulé du seveur..."
-          required
-          [(ngModel)]="server.intitule"
-          name="intitule"
+          formControlName="intitule"
+          placeholder="Entrer l'intitulé du serveur..."
+         
         />
+        <div *ngIf="serverCreationForm.get('intitule').invalid && (serverCreationForm.get('intitule').dirty || serverCreationForm.get('intitule').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un intitule s'il vous plait
+        </div>
       </div>
       <div class="form-group">
         <label for="port">Port <abbr title="Ce champ est obligatoire">*</abbr></label>
@@ -24,13 +26,13 @@
           type="text"
           class="form-control"
           id="port"
-          maxlength="4"
-          pattern="[0-9]{2,4}"
+          formControlName="port"
           placeholder="Entrer un port..."
-          required
-          [(ngModel)]="server.port"
-          name="port"
+          
         />
+        <div *ngIf="serverCreationForm.get('port').invalid && (serverCreationForm.get('port').dirty || serverCreationForm.get('port').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un port s'il vous plait
+        </div>
       </div>
 
       <div class="form-group">
@@ -40,33 +42,34 @@
           class="form-control"
           id="url"
           placeholder="Entrer l'URL du serveur.."
-          required
-          [(ngModel)]="server.url"
-          name="url"
+          formControlName="url"
+          
         />
+        <div *ngIf="serverCreationForm.get('url').invalid && (serverCreationForm.get('url').dirty || serverCreationForm.get('url').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer une adresse IPv4 valide s'il vous plait Ex : 192.168.1.1, Ex: 255.255.255.255
+
+        </div>
       </div>
       <div class="form-group">
         <label for="type">Type <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="type"
-          required
-          [(ngModel)]="server.type"
-          name="Type"
+          formControlName="type"
           class="form-control"
           style="height: 35px;"
         >
           <option value="source">source</option>
           <option value="destinataire">destinataire</option>
         </select>
+        <div *ngIf="serverCreationForm.get('type').invalid && (serverCreationForm.get('type').dirty || serverCreationForm.get('type').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un type s'il vous plait
+        </div>
       </div>
-      <div class="form-group">
+    <!---<div class="form-group">
         <label for="projet">projet <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="projet"
-          required
-          [(ngModel)]="server.projet"
-          name="projet"
-          class="form-control"
+          formControlName="id_projet"
           style="height: 35px;"
           multiple
         >
@@ -76,35 +79,26 @@
             >#{{ project.id_projet }}/{{ project.intitule_projet }}</option
           >
         </select>
-        <!-- <ejs-multiselect
-          id="multiselectelement"
-          [value]="colorValues"
-          [dataSource]="projectsList$ | async"
-          (tagging)="onTagging($event)"
-          [mode]="box"
-          [placeholder]="waterMark"
-          [fields]="fields"
-        ></ejs-multiselect> -->
-        <!-- <ejs-multiselect
-          id="multiselectelement"
-          [dataSource]="projectsList$ | async"
-          [mode]="box"
-        ></ejs-multiselect> -->
+        <div *ngIf="serverCreationForm.get('id_projet').invalid && (serverCreationForm.get('id_projet').dirty || serverCreationForm.get('id_projet').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un projet s'il vous plait
+        </div>
       </div>
-
+    -->
       <div class="form-group">
         <label for="statut">Statut <abbr title="Ce champ est obligatoire">*</abbr></label>
         <select
           id="statut"
-          required
-          [(ngModel)]="server.statut"
-          name="Statut"
+          formControlName="statut"
+          
           class="form-control"
           style="height: 35px;"
         >
           <option value="ouvert" selected>ouvert</option>
           <option value="fermé">fermé</option>
         </select>
+        <div *ngIf="serverCreationForm.get('statut').invalid && (serverCreationForm.get('statut').dirty || serverCreationForm.get('statut').touched)" class="alert alert-danger form-danger" role="alert">
+          entrer un statut s'il vous plait
+        </div>
       </div>
 
       <div class="btn-group">

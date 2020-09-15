@@ -36,4 +36,8 @@ export class ServerService {
   updateServer(id: number, value: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
+  removeServer(id: number): Observable<any> {
+    this.serverCreatedSubject.next(true);
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }
