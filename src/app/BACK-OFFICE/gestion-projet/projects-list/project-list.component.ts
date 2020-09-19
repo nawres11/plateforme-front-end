@@ -58,7 +58,6 @@ export class ProjectListComponent implements OnInit {
     this.blurAll = true;
     this.projectService.getProjecttById(id).pipe(first()).subscribe(
       (data) => {
-        console.log(data);
         this.currentProject = data;
       },
       (error1) => console.log(error1)

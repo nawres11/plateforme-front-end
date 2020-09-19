@@ -60,7 +60,6 @@ export class ServerListComponent implements OnInit {
     this.blurAll = true;
     this.serverService.getServertById(id).pipe(first()).subscribe(
       (data) => {
-        console.log(data);
         this.currentServer = data;
       },
       (error1) => console.log(error1)

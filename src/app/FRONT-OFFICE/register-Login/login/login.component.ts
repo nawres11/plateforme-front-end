@@ -37,14 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('userComponent ', this.user);
     return this.auth.login(this.user).subscribe(
       (r) => {
         const jwt = r.headers.get('Authorization');
         this.auth.saveToken(jwt);
-        console.log(this.auth.isUser());
-        console.log(this.auth.isAdmin());
-        console.log(this.auth.isAuthentified());
 
         if (!this.panParent) {
           if (this.auth.isUser()) {

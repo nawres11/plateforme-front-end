@@ -73,7 +73,6 @@ export class CreateOpeningRequestComponent implements OnInit {
   }
 
   save() {
-    console.log(this.fluxCreationForm.getRawValue());
     this.fluxService.createFlux(this.fluxCreationForm.getRawValue()).subscribe(
       (data) => console.log('msg:', data),
       (error1) => console.log(error1)
@@ -94,11 +93,7 @@ export class CreateOpeningRequestComponent implements OnInit {
   }
 
   onChange(id: number) {
-    console.log(id);
-    console.log(this.fluxCreationForm.get('id_serveur').value);
-
     if (this.fluxCreationForm.get('id_serveur').value) {
-      console.warn(id);
       this.relatedServer$ = this.serverService.getServertById(id).pipe(
         tap((rs) => {
           this.relatedServer = rs;

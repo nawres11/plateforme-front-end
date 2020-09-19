@@ -37,7 +37,6 @@ export class AuthenticationService {
     const jwtObject = jwtHelper.decodeToken(this.jwt);
     this.email = jwtObject.sub;
     this.roles = jwtObject.roles;
-    console.log('after jwt email = ', this.email);
   }
 
   isAdmin() {
