@@ -64,6 +64,7 @@
               <!--update-->
               <!--<button (click)="updateServer(server.id_serveur)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button> -->
               <button
+                *ngIf="isAdmin"
                 type="button"
                 class="btn btn-info"
                 style="margin-left: 10px"

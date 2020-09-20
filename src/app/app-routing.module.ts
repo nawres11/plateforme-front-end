@@ -1,3 +1,5 @@
+import { AdminGuard } from './admin.guard';
+import { AdminLoginComponent } from './FRONT-OFFICE/register-Login/admin-login/login.component';
 import { ProjectListComponent } from './BACK-OFFICE/gestion-projet/projects-list/project-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -16,8 +18,9 @@ import { CreateProjectComponent } from './BACK-OFFICE/gestion-projet/create-proj
 const routes: Routes = [
   { path: '', component: RegisterLoginComponent },
   { path: 'Login', component: RegisterLoginComponent },
+  { path: 'user', component: ServerListComponent, canActivate: [AuthGuard] },
+  { path: 'admin/Login', component: AdminLoginComponent },
   { path: 'admin', component: DashbordComponent, canActivate: [AuthGuard] },
-  { path: 'user', component: DashbordComponent, canActivate: [AuthGuard] },
   {
     path: 'user/ServerList',
     component: ServerListComponent,
@@ -43,11 +46,11 @@ const routes: Routes = [
     component: UpdateComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'admin/details/:id',
-    component: ServerDetailsComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'admin/details/:id',
+  //   component: ServerDetailsComponent,
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'user/FluxList',
     component: FluxListComponent,
@@ -76,18 +79,18 @@ const routes: Routes = [
   {
     path: 'admin/dashboard',
     component: DashbordComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   // ----------------
   {
     path: 'admin/ProjectList',
     component: ProjectListComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'admin/addProject',
     component: CreateProjectComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   // {
   //   path: 'user/addFlux',

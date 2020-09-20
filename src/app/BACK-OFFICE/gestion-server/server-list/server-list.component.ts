@@ -5,6 +5,7 @@ import { ServerService } from '../../../services/server/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap, delay, first } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AuthenticationService } from '../../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-server-list',
@@ -32,12 +33,15 @@ export class ServerListComponent implements OnInit {
     statut: new FormControl(),
   });
 
+  public isAdmin = this.auth.isAdmin();
+
   public searchKey: string;
 
   constructor(
     private serverService: ServerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService,
   ) {
     this.router.events.pipe(first()).subscribe((val) => {
       this.reloadData();

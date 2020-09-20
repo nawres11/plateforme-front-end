@@ -34,7 +34,7 @@
           >Gestion des projets</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="auth.isAdmin()">
         <a
           class="nav-link"
           routerLink="/admin/dashboard"

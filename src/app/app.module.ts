@@ -1,3 +1,4 @@
+import { AdminLoginComponent } from './FRONT-OFFICE/register-Login/admin-login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -81,6 +82,7 @@ import { CreateProjectComponent } from './BACK-OFFICE/gestion-projet/create-proj
     DashboardCardComponent,
     ProjectListComponent,
     CreateProjectComponent,
+    AdminLoginComponent,
   ],
   imports: [
     BrowserModule,
