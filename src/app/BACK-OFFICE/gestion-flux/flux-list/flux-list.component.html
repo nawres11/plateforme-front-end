@@ -32,6 +32,8 @@
           <th>Date d'ouverture</th>
           <th>Nature d'échange</th>
           <th>Statut</th>
+          <th>Validated</th>
+          <th *ngIf="isAdmin">Action</th>
 
         </tr>
       </thead>
@@ -47,6 +49,10 @@
           <td>{{ flux.dateOuverture }}</td>
           <td>{{ flux.natureEchange }}</td>
           <td>{{ flux.statut }}</td>
+          <td [style.color]="flux.validated ? 'green': 'orange'">{{ flux.validated ? 'Validated' : 'Pending ...' }}</td>
+          <td *ngIf="isAdmin">
+            <button class="btn btn-success" [disabled]="flux.validated" (click)="validateFlux(flux.id_flux)">Validate</button>
+          </td>
         </tr>
       </tbody>
     </table>

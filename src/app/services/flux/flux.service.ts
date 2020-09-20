@@ -23,6 +23,7 @@ export class FluxService {
   }
 
   createFlux(flux: object): Observable<object> {
+    this.fluxCreatedSubject.next(true);
     return this.http.post(`${this.baseUrl}`, flux);
   }
   getServersList(): Observable<any> {
@@ -34,5 +35,10 @@ export class FluxService {
   }
   getFluxByServerId(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/fluxsByServers/${id}`);
+  }
+
+  validateFluxById(id: number): Observable<any> {
+    this.fluxCreatedSubject.next(true);
+    return this.http.patch(`${this.baseUrl}/${id}/validate`, null);
   }
 }

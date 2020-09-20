@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../../services/auth/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Serveur } from '../../../entities/Serveur';
@@ -22,7 +23,10 @@ export class FluxListComponent implements OnInit {
     delay(600),
     tap((flux) => this.reloadData())
   );
-  constructor(private fluxService: FluxService, private router: Router) {
+
+  public isAdmin = this.auth.isAdmin();
+
+  constructor(private fluxService: FluxService, private router: Router, private auth: AuthenticationService) {
     this.router.events.subscribe(() => this.reloadData());
   }
 
@@ -55,5 +59,14 @@ export class FluxListComponent implements OnInit {
     if ($event === true) {
       this.closeAdd();
     }
+  }
+
+  validateFlux(id) {
+    console.log(id);
+
+    this.fluxService.validateFluxById(id).subscribe(
+      success => alert('server Validated'),
+      error1 => console.error(error1)
+   );
   }
 }

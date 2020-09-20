@@ -111,4 +111,8 @@ export class ServerListComponent implements OnInit {
     // TODO
     throwError('not implemented');
   }
+
+  validate(id) {
+
+  }
 }
