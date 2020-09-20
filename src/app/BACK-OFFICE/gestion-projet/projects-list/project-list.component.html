@@ -68,6 +68,7 @@
 
               <!--update-->
               <button
+                *ngIf="isAdmin"
                 type="button"
                 class="btn btn-warning"
                 style="margin-left: 10px"
@@ -80,6 +81,7 @@
               </button>
               <!-- delete -->
               <button
+                *ngIf="isAdmin"
                 type="button"
                 class="btn btn-danger"
                 style="margin-left: 10px"

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { tap, delay, first } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProjetService } from '../../../services/projet/projet.service';
+import { AuthenticationService } from '../../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-project-list',
@@ -17,6 +18,7 @@ export class ProjectListComponent implements OnInit {
   public blurAll: boolean;
   public showModifProject: boolean;
   public showDetails: boolean;
+  public isAdmin = this.auth.isAdmin();
   public reloadData$ = this.projectService.projectCreated$.pipe(
     first(),
     delay(600),
@@ -35,7 +37,8 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private projectService: ProjetService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService
   ) {
     this.router.events.pipe(first()).subscribe((val) => {
       this.reloadData();
